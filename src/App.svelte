@@ -1,0 +1,56 @@
+<script>
+  import Header from './lib/Header.svelte';
+  import Hero from './lib/Hero.svelte';
+  import SectionCollectif from './lib/SectionCollectif.svelte';
+  import SectionPiliers from './lib/SectionPiliers.svelte';
+  import SectionSocialProof from './lib/SectionSocialProof.svelte';
+  import SectionFondateur from './lib/SectionFondateur.svelte';
+  import SectionSteps from './lib/SectionSteps.svelte';
+  import SectionFAQ from './lib/SectionFAQ.svelte';
+  import SectionCTA from './lib/SectionCTA.svelte';
+  import Footer from './lib/Footer.svelte';
+  import { onMount } from 'svelte';
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  onMount(() => {
+    gsap.utils.toArray('[data-reveal]').forEach((el) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 32 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    });
+  });
+</script>
+
+<svelte:head>
+  <title>Boost — Rejoins le Club</title>
+</svelte:head>
+
+<div class="scroll-fade-top" aria-hidden="true"></div>
+<Header />
+
+<main>
+  <Hero />
+  <SectionCollectif />
+  <SectionPiliers />
+  <SectionSocialProof />
+  <SectionFondateur />
+  <SectionSteps />
+  <SectionFAQ />
+  <SectionCTA />
+</main>
+
+<Footer />

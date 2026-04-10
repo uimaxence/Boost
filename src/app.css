@@ -1,0 +1,105 @@
+/* Boost LP - Variables & reset */
+
+/* Switzer - polices locales (fichiers dans public/fonts/) */
+@font-face {
+  font-family: 'Switzer';
+  src: url('/fonts/Switzer-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('/fonts/Switzer-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('/fonts/Switzer-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('/fonts/Switzer-Semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('/fonts/Switzer-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bleu-clair: #EFF6FF;
+  --bleu-600: #2064F0;
+  --bleu-700: #184DD9;
+  --bleu-950: #152556;
+  --noir: #0a0a0a;
+  --gris-700: #474F57;
+  --gris-400: #8C959C;
+  --gris-200: #CBD2D6;
+  --blanc: #ffffff;
+  --header-bg: rgba(255, 255, 255, 0.75);
+  --header-blur: 12px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Switzer', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--noir);
+  background: var(--blanc);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Dégradé pour masquer le contenu sous le header au scroll */
+.scroll-fade-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  pointer-events: none;
+  z-index: 90;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.95), transparent);
+}
+
+/* Sections animées au scroll : état initial avant GSAP */
+[data-reveal] {
+  opacity: 0;
+}
