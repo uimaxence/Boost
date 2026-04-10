@@ -717,11 +717,18 @@
 
   @media (max-width: 900px) {
     .steps {
-      padding: 4rem 24px;
+      padding: 4rem 1.5rem;
+    }
+
+    .steps-header {
+      align-items: flex-start;
+      text-align: left;
+      margin-bottom: 2.5rem;
     }
 
     .steps-title {
-      font-size: 1.5rem;
+      font-size: 1.625rem;
+      text-align: left;
     }
 
     .steps-grid {

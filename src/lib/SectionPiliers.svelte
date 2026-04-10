@@ -106,11 +106,17 @@
 
   @media (max-width: 900px) {
     .piliers {
-      padding: 4rem 24px;
+      padding: 4rem 1.5rem;
     }
 
     .piliers-title {
-      font-size: 1.5rem;
+      font-size: 1.625rem;
+      text-align: left;
+      margin-bottom: 2.5rem;
+    }
+
+    .piliers-title br {
+      display: none;
     }
 
     .piliers-grid {

@@ -152,16 +152,31 @@
 
   @media (max-width: 768px) {
     .cta-final {
-      padding: 4rem 24px;
+      padding: 4rem 1.5rem;
       min-height: auto;
     }
 
+    .cta-inner {
+      text-align: left;
+    }
+
     .cta-title {
-      font-size: 1.5rem;
+      font-size: 1.625rem;
+      text-align: left;
     }
 
     .cta-cal-wrapper {
-      padding: 1.5rem;
+      padding: 1.25rem;
+    }
+
+    .cal-grid {
+      gap: 2px;
+    }
+
+    .cal-day,
+    .cal-day-name {
+      font-size: 0.8rem;
+      padding: 6px 0;
     }
   }
 </style>

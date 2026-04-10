@@ -212,29 +212,41 @@
 
   @media (max-width: 900px) {
     .hero {
-      padding: 7rem 0 4rem;
-      min-height: auto;
-      display: block;
+      padding: 6rem 0 3rem;
+      min-height: 100svh;
+      display: flex;
+      align-items: flex-end;
     }
 
     .hero-inner {
-      padding: 0 2rem;
+      padding: 0 1.5rem;
     }
 
+    /* Carte en fond, derrière le texte, sur la moitié haute */
     .hero-map {
-      position: relative;
-      top: auto;
-      right: auto;
-      width: calc(100% + 4rem);
-      max-width: none;
-      margin: 2rem -2rem 0;
-      height: 26rem;
-      mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, black 35%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, black 35%, transparent 100%);
+      position: absolute;
+      top: 0;
+      left: -10%;
+      right: -10%;
+      width: 120%;
+      height: 65%;
+      margin: 0;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, black 30%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, black 30%, transparent 100%);
     }
 
+    /* Dégradé blanc qui protège le texte par dessus la carte */
     .hero-fade {
-      display: none;
+      display: block;
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0) 25%,
+        rgba(255,255,255,0.55) 45%,
+        rgba(255,255,255,0.92) 60%,
+        rgba(255,255,255,1) 70%
+      );
     }
 
     .hero-content {
@@ -260,7 +272,7 @@
 
   @media (max-width: 480px) {
     .hero {
-      padding: 6rem 0 3rem;
+      padding: 5.5rem 0 2.5rem;
     }
 
     .hero-inner {
@@ -268,19 +280,11 @@
     }
 
     .hero-title {
-      font-size: 1.625rem;
-    }
-
-    .hero-desc {
-      font-size: 16px;
+      font-size: 1.75rem;
     }
 
     .hero-map {
-      width: calc(100% + 3rem);
-      margin: 1.5rem -1.5rem 0;
-      height: 22rem;
-      mask-image: radial-gradient(ellipse 80% 75% at 50% 50%, black 35%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 75% at 50% 50%, black 35%, transparent 100%);
+      height: 60%;
     }
   }
 </style>

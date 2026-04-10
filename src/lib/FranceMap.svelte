@@ -30,15 +30,18 @@
   };
 
   onMount(async () => {
-    const width = mapContainer.clientWidth;
-    const height = mapContainer.clientHeight;
+    // Coordonnées internes fixes : la SVG s'adapte au container via viewBox.
+    // Évite les bugs de rendu mobile quand clientWidth/Height vaut 0 au mount.
+    const width = 600;
+    const height = 500;
 
     const svg = d3.select(mapContainer)
       .append('svg')
       .attr('viewBox', `0 0 ${width} ${height}`)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .style('width', '100%')
-      .style('height', '100%');
+      .style('height', '100%')
+      .style('display', 'block');
 
     // Glow filter
     const defs = svg.append('defs');
@@ -83,8 +86,7 @@
       .attr('stroke-width', 0.8)
       .attr('opacity', 0)
       .transition()
-      .delay((d, i) => i * 30)
-      .duration(500)
+      .duration(400)
       .attr('opacity', 1);
 
     // Ligne pointillée Angers ↔ Rennes
@@ -101,8 +103,8 @@
       .attr('stroke-dasharray', '5,5')
       .attr('opacity', 0.35)
       .transition()
-      .delay(700)
-      .duration(800)
+      .delay(150)
+      .duration(500)
       .ease(d3.easeQuadOut)
       .attr('x2', rennesXY[0])
       .attr('y2', rennesXY[1]);
@@ -125,8 +127,8 @@
         .attr('fill', isActive ? COLORS.markerActive : COLORS.markerSoon)
         .attr('filter', isActive ? 'url(#glow)' : null)
         .transition()
-        .delay(800 + i * 200)
-        .duration(500)
+        .delay(300 + i * 100)
+        .duration(400)
         .ease(d3.easeBackOut.overshoot(2))
         .attr('r', isActive ? 10 : 7);
 
@@ -139,7 +141,7 @@
           .attr('stroke-width', 2)
           .attr('opacity', 0)
           .transition()
-          .delay(1300 + i * 200)
+          .delay(700 + i * 100)
           .duration(0)
           .attr('opacity', 0.5)
           .transition()
@@ -172,8 +174,8 @@
         .attr('opacity', 0)
         .text(agency.name)
         .transition()
-        .delay(1000 + i * 200)
-        .duration(400)
+        .delay(450 + i * 100)
+        .duration(300)
         .attr('opacity', 1);
 
       // Zone de hit invisible (plus grande pour faciliter le hover)
@@ -218,7 +220,6 @@
   .france-map {
     width: 100%;
     height: 100%;
-    min-height: 500px;
     position: relative;
   }
 

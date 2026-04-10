@@ -2,9 +2,11 @@
   let open = false;
   import logoSvg from '../../assets/logo.svg?url';
   import ButtonCta from './ButtonCta.svelte';
+
+  function close() { open = false; }
 </script>
 
-<header class="header">
+<header class="header" class:menu-open={open}>
   <a href="/" class="logo" aria-label="Boost accueil">
     <img src={logoSvg} alt="" width="70" height="41" aria-hidden="true" />
   </a>
@@ -21,7 +23,13 @@
     <ButtonCta href="#candidater" label="Candidater" />
   </span>
 
-  <button class="burger" aria-label="Ouvrir le menu" aria-expanded={open} on:click={() => open = !open}>
+  <button
+    class="burger"
+    class:is-open={open}
+    aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+    aria-expanded={open}
+    on:click={() => open = !open}
+  >
     <span class="burger-line"></span>
     <span class="burger-line"></span>
     <span class="burger-line"></span>
@@ -31,11 +39,32 @@
 {#if open}
   <div class="mobile-overlay" role="dialog" aria-modal="true" aria-label="Menu">
     <nav class="mobile-nav">
-      <a href="#concept" on:click={() => open = false}>Le concept</a>
-      <a href="#clubs" on:click={() => open = false}>Les clubs</a>
-      <a href="#faq" on:click={() => open = false}>FAQ</a>
-      <a href="#candidater" class="btn-cta-mobile" on:click={() => open = false}>Candidater</a>
+      <a href="#concept" on:click={close}>
+        <span class="mobile-nav-num">01</span>
+        <span class="mobile-nav-label">Le concept</span>
+        <span class="mobile-nav-arrow">→</span>
+      </a>
+      <a href="#clubs" on:click={close}>
+        <span class="mobile-nav-num">02</span>
+        <span class="mobile-nav-label">Les clubs</span>
+        <span class="mobile-nav-arrow">→</span>
+      </a>
+      <a href="#faq" on:click={close}>
+        <span class="mobile-nav-num">03</span>
+        <span class="mobile-nav-label">FAQ</span>
+        <span class="mobile-nav-arrow">→</span>
+      </a>
     </nav>
+
+    <div class="mobile-footer">
+      <a href="#candidater" class="btn-cta-mobile" on:click={close}>
+        Candidater au Club
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 17L17 7M17 7H8M17 7v9"/>
+        </svg>
+      </a>
+      <p class="mobile-footer-note">contact@Boost.fr</p>
+    </div>
   </div>
 {/if}
 
@@ -101,13 +130,37 @@
     background: none;
     border: none;
     padding: 8px;
+    position: relative;
+    z-index: 110;
   }
 
   .burger-line {
     width: 24px;
     height: 2px;
-    background: var(--noir);
+    background: var(--bleu-950);
     border-radius: 1px;
+    transition: transform 0.3s ease, opacity 0.2s ease, background 0.3s ease;
+    transform-origin: center;
+  }
+
+  .burger.is-open .burger-line {
+    background: var(--blanc);
+  }
+
+  .burger.is-open .burger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .burger.is-open .burger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .burger.is-open .burger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .header.menu-open .logo {
+    filter: invert(1) brightness(2);
   }
 
   .mobile-overlay {
@@ -136,38 +189,125 @@
       padding: 10px 16px;
     }
 
+    .header.menu-open {
+      background: transparent;
+      border-color: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
     .mobile-overlay {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       position: fixed;
       inset: 0;
-      background: rgba(255, 255, 255, 0.98);
+      background: linear-gradient(160deg, #152556 0%, #0c1a3a 100%);
       z-index: 99;
-      padding: 100px 24px 24px;
+      padding: 110px 1.5rem 2rem;
+      animation: overlayIn 0.35s ease-out;
+    }
+
+    .mobile-overlay::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -20%;
+      width: 60%;
+      height: 60%;
+      background: radial-gradient(circle, rgba(32, 100, 240, 0.35), transparent 70%);
+      pointer-events: none;
+    }
+
+    .mobile-overlay::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      left: -20%;
+      width: 70%;
+      height: 50%;
+      background: radial-gradient(circle, rgba(32, 100, 240, 0.2), transparent 70%);
+      pointer-events: none;
+    }
+
+    @keyframes overlayIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .mobile-nav {
       display: flex;
       flex-direction: column;
-      gap: 24px;
-      font-size: 1.25rem;
+      position: relative;
+      z-index: 1;
     }
 
     .mobile-nav a {
-      color: var(--noir);
-      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem 0.25rem;
+      color: var(--blanc);
+      font-weight: 600;
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      animation: navItemIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
-    .mobile-nav .btn-cta-mobile {
+    .mobile-nav a:nth-child(1) { animation-delay: 0.08s; }
+    .mobile-nav a:nth-child(2) { animation-delay: 0.16s; }
+    .mobile-nav a:nth-child(3) { animation-delay: 0.24s; }
+
+    @keyframes navItemIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .mobile-nav-num {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--bleu-600);
+      letter-spacing: 0.1em;
+    }
+
+    .mobile-nav-label {
+      flex: 1;
+    }
+
+    .mobile-nav-arrow {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 1.25rem;
+    }
+
+    .mobile-footer {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      animation: navItemIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both;
+    }
+
+    .btn-cta-mobile {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      margin-top: 16px;
-      padding: 1rem 1.5rem;
-      border-radius: 8px;
-      font-weight: 400;
+      gap: 0.5rem;
+      padding: 1.1rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 600;
       font-size: 1rem;
-      background: var(--bleu-700);
+      background: var(--bleu-600);
       color: var(--blanc);
+      box-shadow: 0 12px 30px -10px rgba(32, 100, 240, 0.6);
+    }
+
+    .mobile-footer-note {
+      text-align: center;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 0;
     }
   }
 </style>

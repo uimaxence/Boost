@@ -43,17 +43,17 @@
   <div class="footer-logo-wrap">
     <svg
       class="footer-logo-svg"
-      viewBox="0 0 1000 240"
+      viewBox="0 0 1000 260"
       preserveAspectRatio="xMidYMid meet"
       aria-hidden="true"
     >
       <text
         x="500"
-        y="220"
+        y="215"
         text-anchor="middle"
         font-family="Switzer, sans-serif"
         font-weight="800"
-        font-size="300"
+        font-size="280"
         textLength="1000"
         lengthAdjust="spacing"
         fill="#152556"
@@ -243,6 +243,9 @@
 
     .footer-logo-wrap {
       margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
     }
 
     .footer-precision p {
@@ -251,9 +254,14 @@
 
     .footer-logo-svg {
       width: 100%;
+      padding: 0 0.5rem;
+      margin-bottom: 1rem;
     }
 
+    /* Sur mobile, le bandeau passe en flux normal sous le BOOST */
     .footer-band {
+      position: static;
+      margin: 0 -16px;
       padding: 0.85rem 1.25rem;
       justify-content: space-between;
       gap: 0.75rem;

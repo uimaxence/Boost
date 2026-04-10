@@ -240,7 +240,7 @@
     position: relative;
     background: var(--blanc);
     padding: 6rem 0 6rem 24px;
-    overflow: visible;
+    overflow: hidden;
   }
 
   .section-collectif-shapes {
@@ -340,35 +340,41 @@
 
   @media (max-width: 900px) {
     .section-collectif {
-      padding: 4rem 24px;
-    }
-
-    .section-collectif-graph {
-      width: 100%;
-      justify-content: center;
+      padding: 4rem 0;
     }
 
     .section-collectif-inner {
       gap: 2rem;
+      padding: 0;
     }
 
     .section-collectif-header {
       max-width: none;
-      text-align: center;
+      padding: 0 1.5rem;
+      text-align: left;
     }
 
     .section-collectif-title {
       font-size: 1.75rem;
-      text-align: center;
+      text-align: left;
     }
 
     .section-collectif-desc {
       font-size: 16px;
     }
 
+    /* Étend le graphique aux bords pour qu'il soit plus visible */
+    .section-collectif-graph {
+      width: 100vw;
+      max-width: 100vw;
+      justify-content: center;
+      padding: 0 0.5rem;
+    }
+
     .section-collectif-graph .graph-svg {
       width: 100%;
       max-width: 100%;
+      min-height: 220px;
     }
   }
 </style>

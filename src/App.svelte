@@ -15,6 +15,11 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
+  // Évite que ScrollTrigger ne réajuste la position quand la barre d'adresse
+  // mobile (iOS Safari) apparaît/disparaît : c'est ce qui provoquait le
+  // "scroll vers le haut tout seul" en cours de navigation.
+  ScrollTrigger.config({ ignoreMobileResize: true });
+
   onMount(() => {
     gsap.utils.toArray('[data-reveal]').forEach((el) => {
       gsap.fromTo(el,

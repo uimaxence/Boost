@@ -368,29 +368,68 @@
   /* Mobile */
   @media (max-width: 900px) {
     .social-proof {
-      padding: 4rem 24px;
+      padding: 4rem 0;
+      overflow: hidden;
+    }
+
+    .social-proof-inner {
+      padding: 0 1.5rem;
+    }
+
+    .social-proof-subtitle {
+      text-align: left;
     }
 
     .social-proof-title {
-      font-size: 1.5rem;
+      font-size: 1.625rem;
+      text-align: left;
+      margin-bottom: 3rem;
     }
 
     .stats-grid {
       grid-template-columns: 1fr;
       gap: 2rem;
-      text-align: center;
-      margin-bottom: 6rem;
+      text-align: left;
+      margin-bottom: 5rem;
     }
 
     .stat-card {
-      text-align: center;
+      text-align: left;
+    }
+
+    .testimonials-header {
+      text-align: left;
+      margin-bottom: 2rem;
     }
 
     .testimonials-title {
       font-size: 1.5rem;
+      text-align: left;
+    }
+
+    /* Slider horizontal pour les témoignages */
+    .testimonials-grid {
+      display: flex;
+      grid-template-columns: none;
+      max-width: none;
+      margin: 0 -1.5rem;
+      padding: 1rem 1.5rem 2rem;
+      gap: 1rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .testimonials-grid::-webkit-scrollbar {
+      display: none;
     }
 
     .testimonial-card {
+      flex: 0 0 85%;
+      max-width: 85%;
+      scroll-snap-align: center;
       padding: 1.75rem 1.5rem 2rem;
     }
 
@@ -410,7 +449,7 @@
     }
 
     .testimonial-body p {
-      font-size: 16px;
+      font-size: 15px;
     }
   }
 </style>

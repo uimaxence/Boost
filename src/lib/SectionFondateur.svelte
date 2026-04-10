@@ -210,13 +210,13 @@
 
   @media (max-width: 900px) {
     .fondateur {
-      padding: 5rem 24px;
+      padding: 5rem 1.5rem;
     }
 
     .fondateur-inner {
       grid-template-columns: 1fr;
       gap: 3rem;
-      text-align: center;
+      text-align: left;
     }
 
     .fondateur-content {
@@ -232,17 +232,18 @@
     }
 
     .fondateur-signature {
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     .fondateur-context {
-      margin: 0 auto;
+      margin: 0;
     }
 
     .fondateur-img {
-      width: 280px;
-      height: 340px;
-      margin: 0 auto;
+      width: 100%;
+      max-width: 320px;
+      height: 380px;
+      margin: 0;
     }
   }
 </style>
