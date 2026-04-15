@@ -212,41 +212,36 @@
 
   @media (max-width: 900px) {
     .hero {
-      padding: 6rem 0 3rem;
-      min-height: 100svh;
+      padding: 6rem 0 0;
+      min-height: auto;
       display: flex;
-      align-items: flex-end;
+      flex-direction: column;
+      align-items: stretch;
+      overflow: hidden;
     }
 
     .hero-inner {
+      position: relative;
+      z-index: 2;
       padding: 0 1.5rem;
+      order: 1;
     }
 
-    /* Carte en fond, derrière le texte, sur la moitié haute */
-    .hero-map {
-      position: absolute;
-      top: 0;
-      left: -10%;
-      right: -10%;
-      width: 120%;
-      height: 65%;
-      margin: 0;
-      pointer-events: none;
-      mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, black 30%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, black 30%, transparent 100%);
-    }
-
-    /* Dégradé blanc qui protège le texte par dessus la carte */
     .hero-fade {
-      display: block;
-      background: linear-gradient(
-        to bottom,
-        rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0) 25%,
-        rgba(255,255,255,0.55) 45%,
-        rgba(255,255,255,0.92) 60%,
-        rgba(255,255,255,1) 70%
-      );
+      display: none;
+    }
+
+    .hero-map {
+      position: relative;
+      order: 2;
+      top: auto;
+      right: auto;
+      width: 100%;
+      height: 340px;
+      margin-top: -1rem;
+      pointer-events: none;
+      mask-image: linear-gradient(to bottom, black 30%, transparent 95%);
+      -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 95%);
     }
 
     .hero-content {
@@ -272,7 +267,7 @@
 
   @media (max-width: 480px) {
     .hero {
-      padding: 5.5rem 0 2.5rem;
+      padding: 5.5rem 0 0;
     }
 
     .hero-inner {
@@ -284,7 +279,7 @@
     }
 
     .hero-map {
-      height: 60%;
+      height: 300px;
     }
   }
 </style>
