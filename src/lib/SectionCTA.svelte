@@ -42,7 +42,11 @@
     window.Cal.ns['15min']('ui', {
       hideEventTypeDetails: false,
       layout: 'month_view',
+      cssVarsPerTheme: {
+        light: { 'cal-border-booker-width': '0px' },
+      },
     });
+
   });
 </script>
 
@@ -256,8 +260,9 @@
     }
 
     .cal-inline {
-      min-height: 360px;
-      max-height: 55vh;
+      min-height: 600px;
+      max-height: none;
+      overflow: visible;
     }
 
     .cta-glow-left-1,

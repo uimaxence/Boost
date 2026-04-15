@@ -22,6 +22,10 @@
   ScrollTrigger.config({ ignoreMobileResize: true });
 
   onMount(() => {
+    // Désactive l'auto-refresh de ScrollTrigger pour éviter les sauts de scroll
+    // quand le contenu change de taille (images, embed Cal, etc.)
+    ScrollTrigger.config({ autoRefreshEvents: 'visibilitychange' });
+
     gsap.utils.toArray('[data-reveal]').forEach((el) => {
       gsap.fromTo(el,
         { opacity: 0, y: 32 },
@@ -38,6 +42,9 @@
         }
       );
     });
+
+    // Refresh unique après que tout le contenu soit chargé
+    setTimeout(() => ScrollTrigger.refresh(), 2000);
   });
 </script>
 
