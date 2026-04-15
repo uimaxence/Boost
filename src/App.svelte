@@ -7,6 +7,7 @@
   import SectionFondateur from './lib/SectionFondateur.svelte';
   import SectionSteps from './lib/SectionSteps.svelte';
   import SectionFAQ from './lib/SectionFAQ.svelte';
+  import SectionOffre from './lib/SectionOffre.svelte';
   import SectionCTA from './lib/SectionCTA.svelte';
   import Footer from './lib/Footer.svelte';
   import { onMount } from 'svelte';
@@ -54,6 +55,7 @@
   <SectionFondateur />
   <SectionSteps />
   <SectionFAQ />
+  <SectionOffre />
   <SectionCTA />
 </main>
 

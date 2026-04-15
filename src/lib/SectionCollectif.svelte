@@ -16,8 +16,12 @@
   let avecConnector;
   let sansLabelGroup;
   let avecLabelGroup;
+  let isMobile = false;
 
   onMount(() => {
+    const check = () => { isMobile = window.innerWidth <= 900; };
+    check();
+    window.addEventListener('resize', check);
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (reduced) {
@@ -80,8 +84,8 @@
     <svg
       bind:this={graphEl}
       class="graph-svg"
-      viewBox="0 0 1440 520"
-      preserveAspectRatio="xMidYMax meet"
+      viewBox={isMobile ? "80 20 1060 460" : "0 0 1440 520"}
+      preserveAspectRatio={isMobile ? "xMidYMid meet" : "xMidYMax meet"}
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label="Graphique comparant la progression Avec Boost et Sans Boost"
@@ -127,14 +131,14 @@
 
       <!-- Curves + areas, revealed left-to-right via clipPath -->
       <g clip-path="url(#reveal-clip)">
-        <!-- Sans Boost: rises early, peaks, then declines -->
+        <!-- Sans Boost: rises early, modest peak, then declines -->
         <path
-          d="M 0 450 C 140 440, 260 190, 480 185 C 660 185, 800 280, 960 370 C 1100 430, 1250 445, 1440 450 L 1440 460 L 0 460 Z"
+          d="M 0 450 C 140 440, 260 300, 480 290 C 660 290, 800 340, 960 390 C 1100 430, 1250 445, 1440 450 L 1440 460 L 0 460 Z"
           fill="url(#grad-sans)"
         />
         <path
           bind:this={sansPath}
-          d="M 0 450 C 140 440, 260 190, 480 185 C 660 185, 800 280, 960 370 C 1100 430, 1250 445, 1440 450"
+          d="M 0 450 C 140 440, 260 300, 480 290 C 660 290, 800 340, 960 390 C 1100 430, 1250 445, 1440 450"
           fill="none"
           stroke="#152556"
           stroke-opacity="0.2"
@@ -164,40 +168,40 @@
         <line
           bind:this={sansConnector}
           x1="320"
-          y1="115"
+          y1={isMobile ? 95 : 115}
           x2="320"
-          y2="255"
+          y2="350"
           stroke="#152556"
           stroke-opacity="0.25"
-          stroke-width="1.2"
+          stroke-width={isMobile ? 2 : 1.2}
         />
         <circle
           bind:this={sansDot}
           cx="320"
-          cy="255"
-          r="5.5"
+          cy="350"
+          r={isMobile ? 8 : 5.5}
           fill="#ffffff"
           stroke="#152556"
           stroke-opacity="0.35"
-          stroke-width="2"
+          stroke-width={isMobile ? 3 : 2}
         />
         <rect
-          x="218"
-          y="78"
-          width="204"
-          height="42"
-          rx="21"
+          x={isMobile ? 188 : 218}
+          y={isMobile ? 30 : 78}
+          width={isMobile ? 264 : 204}
+          height={isMobile ? 60 : 42}
+          rx={isMobile ? 30 : 21}
           fill="#ffffff"
           stroke="#d1d5db"
           stroke-width="1"
         />
         <text
           x="320"
-          y="105"
+          y={isMobile ? 68 : 105}
           text-anchor="middle"
           fill="#152556"
           fill-opacity="0.6"
-          font-size="16"
+          font-size={isMobile ? 28 : 16}
           font-weight="600"
         >Sans Boost</text>
       </g>
@@ -207,37 +211,37 @@
         <line
           bind:this={avecConnector}
           x1="980"
-          y1="120"
+          y1={isMobile ? 95 : 120}
           x2="980"
           y2="276"
           stroke="#184DD9"
           stroke-opacity="0.35"
-          stroke-width="1.2"
+          stroke-width={isMobile ? 2 : 1.2}
         />
         <circle
           bind:this={avecDot}
           cx="980"
           cy="276"
-          r="6"
+          r={isMobile ? 8 : 6}
           fill="#ffffff"
           stroke="#184DD9"
           stroke-opacity="0.6"
-          stroke-width="2"
+          stroke-width={isMobile ? 3 : 2}
         />
         <rect
-          x="878"
-          y="78"
-          width="204"
-          height="42"
-          rx="21"
+          x={isMobile ? 848 : 878}
+          y={isMobile ? 30 : 78}
+          width={isMobile ? 264 : 204}
+          height={isMobile ? 60 : 42}
+          rx={isMobile ? 30 : 21}
           fill="#184DD9"
         />
         <text
           x="980"
-          y="105"
+          y={isMobile ? 68 : 105}
           text-anchor="middle"
           fill="#ffffff"
-          font-size="16"
+          font-size={isMobile ? 28 : 16}
           font-weight="600"
         >Avec Boost</text>
       </g>
@@ -324,7 +328,7 @@
     }
 
     .section-collectif-graph-full .graph-svg {
-      min-height: 240px;
+      min-height: 260px;
     }
   }
 </style>

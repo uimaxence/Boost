@@ -35,13 +35,13 @@
 
     window.Cal.ns['15min']('inline', {
       elementOrSelector: '#my-cal-inline-15min',
-      config: { layout: 'column_view', useSlotsViewOnSmallScreen: 'true' },
+      config: { layout: 'month_view' },
       calLink: 'matteorbrt/15min',
     });
 
     window.Cal.ns['15min']('ui', {
       hideEventTypeDetails: false,
-      layout: 'column_view',
+      layout: 'month_view',
     });
   });
 </script>
