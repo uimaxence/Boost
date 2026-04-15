@@ -236,12 +236,13 @@
       order: 2;
       top: auto;
       right: auto;
-      width: 100%;
-      height: 340px;
+      width: 210%;
+      height: 450px;
+      margin-left: -55%;
       margin-top: -1rem;
       pointer-events: none;
-      mask-image: linear-gradient(to bottom, black 30%, transparent 95%);
-      -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 95%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 40%, transparent 95%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 40%, transparent 95%);
     }
 
     .hero-content {
@@ -279,7 +280,7 @@
     }
 
     .hero-map {
-      height: 300px;
+      height: 410px;
     }
   }
 </style>
