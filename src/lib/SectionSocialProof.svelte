@@ -2,6 +2,9 @@
   // Section Social Proof — stats animées + témoignages membres
   import { onMount } from 'svelte';
   import gsap from 'gsap';
+  import robinImg from '../../assets/robin.png?url';
+  import charlotteImg from '../../assets/charlotte.png?url';
+  import noemieImg from '../../assets/noemie.png?url';
 
   const testimonials = [
     {
@@ -9,7 +12,7 @@
       age: '19 ans',
       role: 'Étudiant-entrepreneur',
       club: "Club d'Angers",
-      initials: 'RB',
+      image: robinImg,
       paragraphs: [
         "Je dirige Puresolutions, une entreprise spécialisée dans le nettoyage automobile à Angers. Passionné par l'entrepreneuriat, j'ai rejoint le Club Boost dès sa création pour structurer mon activité et ne pas rester isolé.",
         "Le club m'a apporté un soutien concret, notamment sur la gestion administrative et sur le plan digital. J'ai pu soumettre mon site internet au regard critique du groupe, et les retours techniques et stratégiques de vrais professionnels m'ont permis de l'optimiser avec une précision que je n'aurais jamais atteinte seul.",
@@ -22,7 +25,7 @@
       age: '21 ans',
       role: 'Vidéaste, photographe',
       club: "Club d'Angers",
-      initials: 'CM',
+      image: charlotteImg,
       paragraphs: [
         "À 21 ans, j'ouvre tout juste ma micro-entreprise. Vidéaste, photographe, bref, un peu touche-à-tout. Mais le problème quand on a 21 ans et qu'on étudie les sciences politiques comme moi, c'est qu'on est 100 % autodidacte, aussi bien sur le cœur de métier que sur la gestion d'entreprise.",
         "J'ai rejoint le Club Boost à ses débuts, car j'étais souvent perdue et je me sentais même parfois seule dans cette aventure. Ce club permet des rencontres, il débloque des situations et surtout crée du lien. Je recommande le Club Boost."
@@ -33,7 +36,7 @@
       age: null,
       role: 'Ostéopathe pour animaux',
       club: "Club d'Angers",
-      initials: 'NC',
+      image: noemieImg,
       paragraphs: [
         "J'ai rejoint le club Boost car je viens d'emménager à Angers et j'avais besoin de rencontrer du monde et de me constituer un réseau. Le club est ultra bienveillant : chacun partage ses progrès et ses doutes sans jugement. Il regroupe des personnes de milieux différents, ce qui permet d'avoir autant de points de vue variés et très pertinents, et favorise également l'entraide.",
         "Pour ma part, Marc-Antoine de Moutarde Sérigraphie a floqué des polos avec mon logo et m'a recommandée à ses amis. Grâce aux rencontres organisées, j'ai pu avoir des discussions enrichissantes avec des personnes que je n'aurais sans doute jamais rencontrées autrement.",
@@ -113,7 +116,7 @@
 
           <header class="testimonial-header">
             <div class="testimonial-avatar" aria-hidden="true">
-              <span>{t.initials}</span>
+              <img src={t.image} alt={t.name} />
             </div>
             <div class="testimonial-meta">
               <p class="testimonial-name">
@@ -302,11 +305,10 @@
     overflow: hidden;
   }
 
-  .testimonial-avatar span {
-    color: rgba(255, 255, 255, 0.85);
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: 0.02em;
+  .testimonial-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .testimonial-meta {

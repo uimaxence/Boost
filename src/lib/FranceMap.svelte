@@ -3,35 +3,29 @@
   import * as d3 from 'd3';
 
   let mapContainer;
-  let tooltip = { visible: false, x: 0, y: 0, name: '', info: '', sub: '' };
+  let tooltip = { visible: false, x: 0, y: 0, status: '', statusColor: '' };
 
   const AGENCIES = [
     {
       name: 'Angers',
       coords: [-0.5632, 47.4784],
-      active: true,
-      info: 'Ouvert depuis 2 mois',
-      sub: '45 membres actifs',
+      status: 'Actif',
+      statusColor: '#22c55e',
     },
     {
       name: 'Rennes',
       coords: [-1.6778, 48.1173],
-      active: true,
-      info: 'Ouverture prochainement',
-      sub: '',
+      status: 'Arrive bientôt',
+      statusColor: '#f97316',
     },
   ];
 
   const COLORS = {
     regionFill: '#f8faff',
     regionStroke: '#c7d2fe',
-    markerActive: '#3730A3',
-    markerSoon: '#818cf8',
   };
 
   onMount(async () => {
-    // Coordonnées internes fixes : la SVG s'adapte au container via viewBox.
-    // Évite les bugs de rendu mobile quand clientWidth/Height vaut 0 au mount.
     const width = 600;
     const height = 500;
 
@@ -43,20 +37,6 @@
       .style('height', '100%')
       .style('display', 'block');
 
-    // Glow filter
-    const defs = svg.append('defs');
-    const filter = defs.append('filter')
-      .attr('id', 'glow')
-      .attr('x', '-50%').attr('y', '-50%')
-      .attr('width', '200%').attr('height', '200%');
-    filter.append('feGaussianBlur')
-      .attr('stdDeviation', '5')
-      .attr('result', 'coloredBlur');
-    const merge = filter.append('feMerge');
-    merge.append('feMergeNode').attr('in', 'coloredBlur');
-    merge.append('feMergeNode').attr('in', 'SourceGraphic');
-
-    // Fetch GeoJSON départements pour plus de détail
     let geojson;
     try {
       const res = await fetch('https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements.geojson');
@@ -65,7 +45,6 @@
       return;
     }
 
-    // Projection zoomée sur Pays de la Loire / Bretagne
     const projection = d3.geoMercator()
       .center([-1.2, 47.6])
       .scale(width * 12)
@@ -98,10 +77,10 @@
       .attr('y1', angersXY[1])
       .attr('x2', angersXY[0])
       .attr('y2', angersXY[1])
-      .attr('stroke', COLORS.markerActive)
-      .attr('stroke-width', 1.2)
+      .attr('stroke', '#94a3b8')
+      .attr('stroke-width', 1)
       .attr('stroke-dasharray', '5,5')
-      .attr('opacity', 0.35)
+      .attr('opacity', 0.25)
       .transition()
       .delay(150)
       .duration(500)
@@ -114,63 +93,73 @@
 
     AGENCIES.forEach((agency, i) => {
       const [x, y] = projection(agency.coords);
+      const isAngers = agency.name === 'Angers';
       const g = markersGroup.append('g')
         .attr('transform', `translate(${x}, ${y})`)
         .style('cursor', 'pointer');
 
-      const isActive = agency.name === 'Angers';
+      // Halo — bleu/gris translucide
+      const pinColor = '#3b82f6';
+      const haloColor = 'rgba(59, 130, 246, 0.18)';
 
-      // Cercle principal
       g.append('circle')
-        .attr('class', 'marker-dot')
         .attr('r', 0)
-        .attr('fill', isActive ? COLORS.markerActive : COLORS.markerSoon)
-        .attr('filter', isActive ? 'url(#glow)' : null)
+        .attr('fill', haloColor)
+        .transition()
+        .delay(300 + i * 100)
+        .duration(400)
+        .ease(d3.easeBackOut.overshoot(1.5))
+        .attr('r', 10);
+
+      // Point central — bleu
+      g.append('circle')
+        .attr('r', 0)
+        .attr('fill', pinColor)
         .transition()
         .delay(300 + i * 100)
         .duration(400)
         .ease(d3.easeBackOut.overshoot(2))
-        .attr('r', isActive ? 10 : 7);
+        .attr('r', 4.5);
 
-      // Pulse pour Angers
-      if (isActive) {
+      // Pulse uniquement pour Angers (actif)
+      if (isAngers) {
         g.append('circle')
-          .attr('r', 10)
+          .attr('r', 4.5)
           .attr('fill', 'none')
-          .attr('stroke', COLORS.markerActive)
-          .attr('stroke-width', 2)
+          .attr('stroke', pinColor)
+          .attr('stroke-width', 1.5)
           .attr('opacity', 0)
           .transition()
           .delay(700 + i * 100)
           .duration(0)
-          .attr('opacity', 0.5)
+          .attr('opacity', 0.3)
           .transition()
           .duration(2000)
           .ease(d3.easeQuadOut)
-          .attr('r', 28)
+          .attr('r', 18)
           .attr('opacity', 0)
           .on('end', function repeat() {
             d3.select(this)
-              .attr('r', 10)
-              .attr('opacity', 0.5)
+              .attr('r', 4.5)
+              .attr('opacity', 0.3)
               .transition()
               .duration(2000)
               .ease(d3.easeQuadOut)
-              .attr('r', 28)
+              .attr('r', 18)
               .attr('opacity', 0)
               .on('end', repeat);
           });
       }
 
-      // Label ville
+      // Nom de ville persistant au-dessus du point
       g.append('text')
         .attr('x', 0)
-        .attr('y', isActive ? -18 : -14)
+        .attr('y', -16)
         .attr('text-anchor', 'middle')
-        .attr('font-size', isActive ? '13px' : '11px')
-        .attr('font-weight', '600')
+        .attr('font-size', '10px')
+        .attr('font-weight', '500')
         .attr('font-family', 'Switzer, sans-serif')
-        .attr('fill', isActive ? COLORS.markerActive : COLORS.markerSoon)
+        .attr('fill', '#6b7280')
         .attr('opacity', 0)
         .text(agency.name)
         .transition()
@@ -178,19 +167,18 @@
         .duration(300)
         .attr('opacity', 1);
 
-      // Zone de hit invisible (plus grande pour faciliter le hover)
+      // Zone de hit invisible pour le hover
       g.append('circle')
-        .attr('r', 25)
+        .attr('r', 22)
         .attr('fill', 'transparent')
         .on('mouseenter', (event) => {
           const rect = mapContainer.getBoundingClientRect();
           tooltip = {
             visible: true,
             x: event.clientX - rect.left,
-            y: event.clientY - rect.top - 12,
-            name: agency.name,
-            info: agency.info,
-            sub: agency.sub,
+            y: event.clientY - rect.top - 10,
+            status: agency.status,
+            statusColor: agency.statusColor,
           };
         })
         .on('mouseleave', () => {
@@ -204,14 +192,10 @@
   {#if tooltip.visible}
     <div
       class="tooltip"
-      class:active={tooltip.sub}
       style="left: {tooltip.x}px; top: {tooltip.y}px;"
     >
-      <span class="tooltip-name">{tooltip.name}</span>
-      <span class="tooltip-info">{tooltip.info}</span>
-      {#if tooltip.sub}
-        <span class="tooltip-sub">{tooltip.sub}</span>
-      {/if}
+      <span class="tooltip-dot" style="background: {tooltip.statusColor};"></span>
+      <span class="tooltip-text" style="color: {tooltip.statusColor};">{tooltip.status}</span>
     </div>
   {/if}
 </div>
@@ -232,51 +216,34 @@
   .tooltip {
     position: absolute;
     transform: translate(-50%, -100%);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     background: white;
-    border-radius: 10px;
-    padding: 0.625rem 0.875rem;
-    box-shadow: 0 4px 20px rgba(55, 48, 163, 0.15), 0 0 0 1px rgba(55, 48, 163, 0.08);
+    border-radius: 6px;
+    padding: 4px 10px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
     pointer-events: none;
     z-index: 10;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
     white-space: nowrap;
-    animation: tooltipIn 0.2s ease-out;
+    animation: tooltipIn 0.15s ease-out;
+  }
+
+  .tooltip-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .tooltip-text {
+    font-size: 10px;
+    font-weight: 600;
+    font-family: Switzer, sans-serif;
   }
 
   @keyframes tooltipIn {
-    from { opacity: 0; transform: translate(-50%, -90%); }
+    from { opacity: 0; transform: translate(-50%, -92%); }
     to { opacity: 1; transform: translate(-50%, -100%); }
-  }
-
-  .tooltip-name {
-    font-size: 0.8125rem;
-    font-weight: 700;
-    color: #3730A3;
-  }
-
-  .tooltip-info {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #4b5563;
-  }
-
-  .tooltip-sub {
-    font-size: 0.6875rem;
-    font-weight: 500;
-    color: #3730A3;
-  }
-
-  .tooltip::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    width: 10px;
-    height: 10px;
-    background: white;
-    box-shadow: 2px 2px 4px rgba(55, 48, 163, 0.08);
   }
 </style>

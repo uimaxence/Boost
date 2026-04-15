@@ -1,12 +1,36 @@
 <script>
-  let open = false;
+  import { onMount } from 'svelte';
   import logoSvg from '../../assets/logo.svg?url';
   import ButtonCta from './ButtonCta.svelte';
 
+  let open = false;
+  let inverted = false;
+  let headerEl;
+
   function close() { open = false; }
+
+  onMount(() => {
+    const darkSelectors = '.piliers, .fondateur, .cta-final';
+
+    function update() {
+      if (!headerEl) return;
+      const mid = headerEl.getBoundingClientRect().top + headerEl.getBoundingClientRect().height / 2;
+      const sections = document.querySelectorAll(darkSelectors);
+      let overDark = false;
+      sections.forEach(s => {
+        const r = s.getBoundingClientRect();
+        if (r.top <= mid && r.bottom >= mid) overDark = true;
+      });
+      inverted = overDark;
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+    return () => window.removeEventListener('scroll', update);
+  });
 </script>
 
-<header class="header" class:menu-open={open}>
+<header class="header" class:menu-open={open} class:inverted bind:this={headerEl}>
   <a href="/" class="logo" aria-label="Boost accueil">
     <img src={logoSvg} alt="" width="70" height="41" aria-hidden="true" />
   </a>
@@ -117,6 +141,7 @@
     font-weight: 400;
     font-size: 1rem;
     word-spacing: -3%;
+    transition: color 0.3s ease;
   }
 
   .nav a:hover {
@@ -157,6 +182,35 @@
 
   .burger.is-open .burger-line:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Inversion sur fond sombre */
+  .header.inverted {
+    background: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.12);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+
+  .header.inverted .logo img {
+    filter: invert(1) brightness(2);
+    transition: filter 0.3s ease;
+  }
+
+  .header.inverted .divider {
+    background: rgba(255, 255, 255, 0.2);
+    transition: background 0.3s ease;
+  }
+
+  .header.inverted .nav a {
+    color: var(--blanc);
+  }
+
+  .header.inverted .nav a:hover {
+    color: var(--bleu-clair);
+  }
+
+  .header.inverted .burger-line {
+    background: var(--blanc);
   }
 
   .header.menu-open .logo {

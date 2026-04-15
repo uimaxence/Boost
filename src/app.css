@@ -91,18 +91,6 @@ img {
   display: block;
 }
 
-/* Dégradé pour masquer le contenu sous le header au scroll */
-.scroll-fade-top {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 120px;
-  pointer-events: none;
-  z-index: 90;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.95), transparent);
-}
-
 /* Sections animées au scroll : état initial avant GSAP */
 [data-reveal] {
   opacity: 0;

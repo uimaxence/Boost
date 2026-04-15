@@ -44,7 +44,6 @@
   <title>Boost — Rejoins le Club</title>
 </svelte:head>
 
-<div class="scroll-fade-top" aria-hidden="true"></div>
 <Header />
 
 <main>
