@@ -1,6 +1,7 @@
 <script>
   import ButtonCta from './ButtonCta.svelte';
   import FranceMap from './FranceMap.svelte';
+  import rondSvg from '../../assets/rond.svg?url';
   import { onMount } from 'svelte';
 
   let count = 0;
@@ -18,6 +19,12 @@
 </script>
 
 <section class="hero" data-reveal>
+  <!-- Logos décoratifs en fond -->
+  <div class="hero-decos" aria-hidden="true">
+    <img src={rondSvg} alt="" class="hero-deco hero-deco--tl" />
+    <img src={rondSvg} alt="" class="hero-deco hero-deco--bl" />
+  </div>
+
   <!-- Carte D3 en absolute derrière tout -->
   <div class="hero-map">
     <FranceMap />
@@ -63,6 +70,45 @@
     display: flex;
     align-items: center;
   }
+
+  /* Logos décoratifs */
+  .hero-decos {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .hero-deco {
+    position: absolute;
+    opacity: 0.5;
+  }
+
+  .hero-deco--tl {
+    width: 500px;
+    top: -180px;
+    left: -180px;
+    animation: deco-float-tl 14s ease-in-out infinite;
+  }
+
+  .hero-deco--bl {
+    width: 800px;
+    bottom: -300px;
+    left: -250px;
+    animation: deco-float-bl 12s ease-in-out infinite 3s;
+  }
+
+
+  @keyframes deco-float-tl {
+    0%, 100% { transform: translateY(0) rotate(-15deg); }
+    50% { transform: translateY(-8px) rotate(-15deg); }
+  }
+
+  @keyframes deco-float-bl {
+    0%, 100% { transform: translateY(0) rotate(10deg); }
+    50% { transform: translateY(-8px) rotate(10deg); }
+  }
+
 
   /* Carte D3 en absolute */
   .hero-map {
@@ -228,6 +274,10 @@
     }
 
     .hero-fade {
+      display: none;
+    }
+
+    .hero-decos {
       display: none;
     }
 

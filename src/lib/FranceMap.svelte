@@ -3,7 +3,6 @@
   import * as d3 from 'd3';
 
   let mapContainer;
-  let tooltip = { visible: false, x: 0, y: 0, status: '', statusColor: '' };
 
   const AGENCIES = [
     {
@@ -167,38 +166,52 @@
         .duration(300)
         .attr('opacity', 1);
 
+      // Label statut au hover (au-dessus du nom, centré)
+      const statusFo = g.append('foreignObject')
+        .attr('x', -60)
+        .attr('y', -42)
+        .attr('width', 120)
+        .attr('height', 22)
+        .attr('opacity', 0)
+        .style('pointer-events', 'none');
+
+      const statusDiv = statusFo.append('xhtml:div')
+        .style('display', 'flex')
+        .style('align-items', 'center')
+        .style('justify-content', 'center')
+        .style('gap', '4px')
+        .style('font-family', 'Switzer, sans-serif')
+        .style('white-space', 'nowrap');
+
+      statusDiv.append('xhtml:span')
+        .style('width', '5px')
+        .style('height', '5px')
+        .style('border-radius', '50%')
+        .style('background', agency.statusColor)
+        .style('flex-shrink', '0');
+
+      statusDiv.append('xhtml:span')
+        .style('font-size', '8px')
+        .style('font-weight', '600')
+        .style('color', agency.statusColor)
+        .text(agency.status);
+
       // Zone de hit invisible pour le hover
       g.append('circle')
         .attr('r', 22)
         .attr('fill', 'transparent')
-        .on('mouseenter', (event) => {
-          const rect = mapContainer.getBoundingClientRect();
-          tooltip = {
-            visible: true,
-            x: event.clientX - rect.left,
-            y: event.clientY - rect.top - 10,
-            status: agency.status,
-            statusColor: agency.statusColor,
-          };
+        .style('cursor', 'pointer')
+        .on('mouseenter', () => {
+          statusFo.transition().duration(150).attr('opacity', 1);
         })
         .on('mouseleave', () => {
-          tooltip = { ...tooltip, visible: false };
+          statusFo.transition().duration(150).attr('opacity', 0);
         });
     });
   });
 </script>
 
-<div class="france-map" bind:this={mapContainer}>
-  {#if tooltip.visible}
-    <div
-      class="tooltip"
-      style="left: {tooltip.x}px; top: {tooltip.y}px;"
-    >
-      <span class="tooltip-dot" style="background: {tooltip.statusColor};"></span>
-      <span class="tooltip-text" style="color: {tooltip.statusColor};">{tooltip.status}</span>
-    </div>
-  {/if}
-</div>
+<div class="france-map" bind:this={mapContainer}></div>
 
 <style>
   .france-map {
@@ -213,37 +226,4 @@
     height: 100%;
   }
 
-  .tooltip {
-    position: absolute;
-    transform: translate(-50%, -100%);
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: white;
-    border-radius: 6px;
-    padding: 4px 10px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
-    pointer-events: none;
-    z-index: 10;
-    white-space: nowrap;
-    animation: tooltipIn 0.15s ease-out;
-  }
-
-  .tooltip-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .tooltip-text {
-    font-size: 10px;
-    font-weight: 600;
-    font-family: Switzer, sans-serif;
-  }
-
-  @keyframes tooltipIn {
-    from { opacity: 0; transform: translate(-50%, -92%); }
-    to { opacity: 1; transform: translate(-50%, -100%); }
-  }
 </style>

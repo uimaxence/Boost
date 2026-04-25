@@ -18,7 +18,7 @@
       <span class="fondateur-eyebrow">Mot du fondateur</span>
       <blockquote class="fondateur-quote">
         <span class="quote-mark" aria-hidden="true">“</span>
-        À 22 ans, j'ai compris que mon gros frein n'était pas technique, mais humain. J'ai créé Boost pour que personne n'ait à chercher ses réponses seul.
+        À 22 ans, j'ai compris que mon gros frein n'était pas technique, mais humain. J'ai créé Boost pour que personne n'ait à chercher ses réponses seul. "
       </blockquote>
       <div class="fondateur-signature">
         <span class="fondateur-name">Mattéo</span>

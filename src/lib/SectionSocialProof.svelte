@@ -192,6 +192,11 @@
 </script>
 
 <section class="social-proof" id="temoignages" data-reveal>
+  <div class="sp-shapes" aria-hidden="true">
+    <svg class="sp-shape sp-shape--1" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <svg class="sp-shape sp-shape--2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+    <svg class="sp-shape sp-shape--3" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>
+  </div>
   <div class="social-proof-inner">
     <p class="social-proof-subtitle">Rejoint un réseau en pleine croissance !</p>
     <h2 class="social-proof-title">
@@ -310,7 +315,14 @@
 </section>
 
 <style>
-  .social-proof { background: var(--blanc); padding: 6rem 24px; }
+  .social-proof { background: var(--blanc); padding: 6rem 24px; position: relative; overflow: hidden; }
+
+  .sp-shapes { position: absolute; inset: 0; pointer-events: none; }
+  .sp-shape { position: absolute; color: rgba(32, 100, 240, 0.08); }
+  .sp-shape--1 { width: 18px; right: 6%; top: 12%; animation: sp-float 9s ease-in-out infinite; }
+  .sp-shape--2 { width: 14px; left: 4%; top: 40%; animation: sp-float 11s ease-in-out infinite 2s; }
+  .sp-shape--3 { width: 7px; right: 10%; bottom: 25%; animation: sp-float 8s ease-in-out infinite 3s; }
+  @keyframes sp-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
   .social-proof-inner { max-width: 1200px; margin: 0 auto; width: 100%; }
 
@@ -335,7 +347,7 @@
   .bento-text { display: flex; flex-direction: column; gap: 0.15rem; }
   .bento-number { font-size: 3rem; font-weight: 700; color: var(--bleu-600); line-height: 1; font-variant-numeric: tabular-nums; }
   .bento-card--members .bento-number { font-size: 3.5rem; }
-  .bento-label { font-size: 0.95rem; font-weight: 600; color: var(--bleu-950); }
+  .bento-label { font-size: 1.15rem; font-weight: 600; color: var(--bleu-950); }
   .bento-desc { font-size: 0.875rem; line-height: 1.5; color: var(--gris-700); margin: 0; }
   .bento-icon { width: 52px; height: 52px; color: var(--bleu-600); flex-shrink: 0; }
   .bento-icon svg { width: 100%; height: 100%; }
