@@ -266,10 +266,13 @@
   @media (max-width: 900px) {
     .section-collectif {
       padding: 4rem 0 0;
+      display: flex;
+      flex-direction: column;
     }
 
     .section-collectif-inner {
       padding: 0 1.5rem 2rem;
+      order: 1;
     }
 
     .section-collectif-content {
@@ -283,7 +286,11 @@
     .section-collectif-graph {
       position: relative;
       top: auto;
-      margin-top: 1rem;
+      left: auto;
+      right: auto;
+      bottom: auto;
+      order: 2;
+      overflow: hidden;
     }
 
     .graph-fade {
@@ -292,10 +299,9 @@
 
     .graph-svg {
       position: relative;
-      width: 180%;
-      margin-left: -40%;
+      width: 100%;
       height: auto;
-      min-height: 300px;
+      min-height: 220px;
     }
 
     .section-collectif-stats {
