@@ -36,8 +36,10 @@
 
       <div class="footer-col">
         <h4 class="footer-col-title">Le Club</h4>
-        <a href="#concept">Concept</a>
+        <a href="#concept">Le concept</a>
         <a href="#temoignages">Témoignages</a>
+        <a href="#offre">Tarifs</a>
+        <a href="#faq">FAQ</a>
         <a href="#candidater">Candidater</a>
       </div>
 
@@ -75,8 +77,9 @@
 
 <style>
   .footer {
-    background: var(--bleu-950);
+    background: var(--blanc);
     padding: 4rem 24px 2rem;
+    border-top: 1px solid var(--gris-200);
   }
 
   .footer-inner {
@@ -90,7 +93,7 @@
     grid-template-columns: 2fr 1fr 1fr;
     gap: 4rem;
     padding-bottom: 3rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--gris-200);
   }
 
   .footer-brand {
@@ -102,13 +105,12 @@
   .footer-logo {
     width: 40px;
     height: auto;
-    filter: brightness(0) invert(1);
   }
 
   .footer-tagline {
     font-size: 0.95rem;
     line-height: 1.5;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--gris-700);
     margin: 0;
     max-width: 300px;
   }
@@ -123,8 +125,8 @@
     width: 36px;
     height: 36px;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.6);
+    background: var(--bleu-clair);
+    color: var(--bleu-600);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,7 +134,7 @@
   }
 
   .footer-socials a:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--bleu-600);
     color: white;
   }
 
@@ -152,19 +154,19 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--gris-400);
     margin: 0 0 0.5rem;
   }
 
   .footer-col a {
     font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--gris-700);
     text-decoration: none;
     transition: color 0.2s;
   }
 
   .footer-col a:hover {
-    color: white;
+    color: var(--bleu-600);
   }
 
   .footer-email {
@@ -184,7 +186,7 @@
     background: transparent;
     border: none;
     padding: 4px;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--gris-400);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -193,8 +195,8 @@
   }
 
   .copy-btn:hover {
-    color: white;
-    background: rgba(255, 255, 255, 0.1);
+    color: var(--bleu-600);
+    background: var(--bleu-clair);
   }
 
   .copy-btn.is-copied {
@@ -210,7 +212,7 @@
 
   .footer-copy {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.35);
+    color: var(--gris-400);
   }
 
   .footer-legal {
@@ -221,17 +223,17 @@
 
   .footer-legal a {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.35);
+    color: var(--gris-400);
     text-decoration: none;
     transition: color 0.2s;
   }
 
   .footer-legal a:hover {
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--bleu-600);
   }
 
   .footer-sep {
-    color: rgba(255, 255, 255, 0.2);
+    color: var(--gris-200);
   }
 
   @media (max-width: 768px) {

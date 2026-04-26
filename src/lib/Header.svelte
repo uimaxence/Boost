@@ -38,7 +38,8 @@
 
   <nav class="nav" aria-label="Navigation principale">
     <a href="#concept">Le concept</a>
-    <a href="#clubs">Les clubs</a>
+    <a href="#temoignages">Témoignages</a>
+    <a href="#offre">Tarifs</a>
     <a href="#faq">FAQ</a>
   </nav>
   <span class="divider" aria-hidden="true"></span>
@@ -68,13 +69,18 @@
         <span class="mobile-nav-label">Le concept</span>
         <span class="mobile-nav-arrow">→</span>
       </a>
-      <a href="#clubs" on:click={close}>
+      <a href="#temoignages" on:click={close}>
         <span class="mobile-nav-num">02</span>
-        <span class="mobile-nav-label">Les clubs</span>
+        <span class="mobile-nav-label">Témoignages</span>
+        <span class="mobile-nav-arrow">→</span>
+      </a>
+      <a href="#offre" on:click={close}>
+        <span class="mobile-nav-num">03</span>
+        <span class="mobile-nav-label">Tarifs</span>
         <span class="mobile-nav-arrow">→</span>
       </a>
       <a href="#faq" on:click={close}>
-        <span class="mobile-nav-num">03</span>
+        <span class="mobile-nav-num">04</span>
         <span class="mobile-nav-label">FAQ</span>
         <span class="mobile-nav-arrow">→</span>
       </a>
