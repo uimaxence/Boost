@@ -1,6 +1,5 @@
 <script>
-  // Section Offre — carte unique avec toggle hebdo/mensuel
-  let isMonthly = true;
+  // Section Offre — carte unique, tarif mensuel
 </script>
 
 <section class="offre" id="offre" data-reveal>
@@ -46,29 +45,16 @@
         <div class="offre-card-top">
           <div class="offre-card-left">
             <h3 class="offre-card-name">Adhésion Club Boost</h3>
-            <div class="offre-toggle-wrap">
-              <button
-                class="offre-toggle-btn"
-                class:active={!isMonthly}
-                on:click={() => isMonthly = false}
-              >Par semaine</button>
-              <button
-                class="offre-toggle-btn"
-                class:active={isMonthly}
-                on:click={() => isMonthly = true}
-              >Par mois</button>
-            </div>
+            <span class="offre-card-sub">Sans engagement, résiliable à tout moment</span>
           </div>
           <div class="offre-price">
-            <span class="offre-amount">
-              {isMonthly ? '19,00' : '4,75'}&nbsp;€
-            </span>
-            <span class="offre-period">/{isMonthly ? 'mois' : 'semaine'}</span>
+            <span class="offre-amount">19,00&nbsp;€</span>
+            <span class="offre-period">/mois</span>
           </div>
         </div>
 
         <p class="offre-card-note">
-          {isMonthly ? "L'équivalent d'un café par semaine" : 'Sans engagement, résiliable à tout moment'}
+          Soit 4,45 € par semaine, l'équivalent d'un cappuccino en terrasse.
         </p>
 
         <div class="offre-divider"></div>
@@ -246,33 +232,11 @@
     margin: 0;
   }
 
-  .offre-toggle-wrap {
-    display: inline-flex;
-    background: #f1f4f9;
-    border-radius: 8px;
-    padding: 3px;
-  }
-
-  .offre-toggle-btn {
-    padding: 0.4rem 0.85rem;
-    font-size: 0.8rem;
-    font-weight: 500;
-    border: none;
-    border-radius: 6px;
-    background: transparent;
+  .offre-card-sub {
+    font-size: 0.85rem;
     color: var(--gris-400);
-    cursor: pointer;
-    transition: all 0.25s ease;
-    line-height: 1.3;
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  .offre-toggle-btn.active {
-    background: var(--blanc);
-    color: var(--bleu-950);
-    font-weight: 600;
-    box-shadow: 0 1px 4px rgba(21, 37, 86, 0.1);
+    font-weight: 500;
+    line-height: 1.4;
   }
 
   .offre-price {

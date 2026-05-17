@@ -58,12 +58,18 @@
   let dx = 0;
   let cardEls = [];
   let wrapperEl;
+  let hoverSide = ''; // 'left' | 'right' for custom cursor
 
   $: order = testimonials.map((_, i) => (i - active + N) % N);
 
   function advance() {
     expandedMap = {};
     active = (active + 1) % N;
+  }
+
+  function goPrev() {
+    expandedMap = {};
+    active = (active - 1 + N) % N;
   }
 
   function goTo(i) {
@@ -84,6 +90,8 @@
   // --- Drag handlers ---
   function onDown(e) {
     if (e.target.closest('.stack-expand')) return; // don't drag on "Voir plus"
+    if (e.target.closest('.stack-arrow')) return;   // explicit arrow buttons handle themselves
+    if (e.target.closest('.stack-dot')) return;
     isDragging = true;
     startX = e.touches ? e.touches[0].clientX : e.clientX;
     dx = 0;
@@ -93,6 +101,12 @@
       top.classList.add('is-dragging');
     }
     startAuto(); // reset timer on interaction
+  }
+
+  function onHoverMove(e) {
+    if (isDragging || !wrapperEl) return;
+    const rect = wrapperEl.getBoundingClientRect();
+    hoverSide = (e.clientX - rect.left) < rect.width / 2 ? 'left' : 'right';
   }
 
   function onMove(e) {
@@ -137,6 +151,14 @@
         top.style.opacity = '';
         advance();
       }, 400);
+    } else if (Math.abs(dx) < 5) {
+      // Treat as click — navigate based on which half was clicked
+      const rect = wrapperEl.getBoundingClientRect();
+      const isLeft = (startX - rect.left) < rect.width / 2;
+      top.style.transition = '';
+      top.style.transform = '';
+      if (isLeft) goPrev(); else advance();
+      startAuto();
     } else {
       // Snap back
       top.style.transition = 'transform 0.3s ease';
@@ -175,6 +197,7 @@
     if (wrapperEl) {
       wrapperEl.addEventListener('mousedown', onDown);
       wrapperEl.addEventListener('touchstart', onDown, { passive: true });
+      wrapperEl.addEventListener('mousemove', onHoverMove);
       window.addEventListener('mousemove', onMove);
       window.addEventListener('touchmove', onMove, { passive: false });
       window.addEventListener('mouseup', onUp);
@@ -184,6 +207,7 @@
 
   onDestroy(() => {
     clearInterval(autoTimer);
+    if (wrapperEl) wrapperEl.removeEventListener('mousemove', onHoverMove);
     window.removeEventListener('mousemove', onMove);
     window.removeEventListener('touchmove', onMove);
     window.removeEventListener('mouseup', onUp);
@@ -203,56 +227,21 @@
       Ils ont déjà rejoint le <span class="highlight">club Boost</span>
     </h2>
 
-    <!-- Bento stats -->
-    <div class="bento-grid">
-      <div class="bento-card bento-card--members">
-        <div class="bento-row">
-          <div class="bento-text">
-            <span class="bento-number" data-counter="43">0</span>
-            <span class="bento-label">Membres actifs</span>
-          </div>
-          <div class="bento-icon" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none">
-              <circle class="user-head u1" cx="20" cy="12" r="5" fill="currentColor"/>
-              <path class="user-body u1" d="M10 32c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-              <circle class="user-head u2" cx="33" cy="14" r="3.5" fill="currentColor" opacity="0.4"/>
-              <path class="user-body u2" d="M27 32c0-4 2.5-7 6-8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
-              <circle class="user-head u3" cx="7" cy="14" r="3.5" fill="currentColor" opacity="0.4"/>
-              <path class="user-body u3" d="M13 32c0-4-2.5-7-6-8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
-            </svg>
-          </div>
-        </div>
-        <p class="bento-desc">Rejoins-nous pour construire le 1er réseau freelance de France.</p>
+    <!-- KPI hero -->
+    <div class="kpi-hero">
+      <div class="kpi-hero-icon" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none">
+          <circle class="user-head u1" cx="20" cy="12" r="5" fill="currentColor"/>
+          <path class="user-body u1" d="M10 32c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle class="user-head u2" cx="33" cy="14" r="3.5" fill="currentColor" opacity="0.4"/>
+          <path class="user-body u2" d="M27 32c0-4 2.5-7 6-8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
+          <circle class="user-head u3" cx="7" cy="14" r="3.5" fill="currentColor" opacity="0.4"/>
+          <path class="user-body u3" d="M13 32c0-4-2.5-7-6-8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
+        </svg>
       </div>
-      <div class="bento-row-2">
-        <div class="bento-card bento-card--reco">
-          <div class="bento-icon-sm" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none">
-              <circle class="reco-star s1" cx="20" cy="14" r="3" fill="currentColor"/>
-              <circle class="reco-star s2" cx="12" cy="20" r="2" fill="currentColor" opacity="0.5"/>
-              <circle class="reco-star s3" cx="28" cy="20" r="2" fill="currentColor" opacity="0.5"/>
-              <path d="M8 26h24v1a7 7 0 01-7 7H15a7 7 0 01-7-7v-1z" fill="currentColor" opacity="0.1"/>
-            </svg>
-          </div>
-          <span class="bento-number" data-counter="140" data-prefix="+">+0</span>
-          <span class="bento-label">Recommandations</span>
-        </div>
-        <div class="bento-card bento-card--events">
-          <div class="bento-icon-sm" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none">
-              <rect x="6" y="10" width="28" height="24" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/>
-              <path d="M6 18h28" stroke="currentColor" stroke-width="2.5"/>
-              <line x1="14" y1="6" x2="14" y2="14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-              <line x1="26" y1="6" x2="26" y2="14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-              <circle class="cal-dot d1" cx="14" cy="25" r="2" fill="currentColor"/>
-              <circle class="cal-dot d2" cx="20" cy="25" r="2" fill="currentColor" opacity="0.5"/>
-              <circle class="cal-dot d3" cx="26" cy="25" r="2" fill="currentColor" opacity="0.3"/>
-            </svg>
-          </div>
-          <span class="bento-number" data-counter="3">0</span>
-          <span class="bento-label">Événements physiques</span>
-        </div>
-      </div>
+      <span class="kpi-hero-number" data-counter="45">0</span>
+      <span class="kpi-hero-label">Membres actifs</span>
+      <p class="kpi-hero-desc">Rejoins-nous pour construire le 1er réseau freelance de France.</p>
     </div>
 
     <!-- Témoignages stack -->
@@ -263,7 +252,32 @@
       </h3>
     </div>
 
-    <div class="stack-zone" bind:this={wrapperEl}>
+    <div
+      class="stack-zone"
+      class:cursor-left={hoverSide === 'left'}
+      class:cursor-right={hoverSide === 'right'}
+      bind:this={wrapperEl}
+    >
+      <button
+        type="button"
+        class="stack-arrow stack-arrow--prev"
+        on:click|stopPropagation={() => { goPrev(); startAuto(); }}
+        aria-label="Témoignage précédent"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="stack-arrow stack-arrow--next"
+        on:click|stopPropagation={() => { advance(); startAuto(); }}
+        aria-label="Témoignage suivant"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
       {#each testimonials as t, i}
         {@const pos = order[i]}
         <article
@@ -338,33 +352,55 @@
 
   .social-proof-title .highlight, .testimonials-title .highlight { color: var(--bleu-600); }
 
-  /* ========== BENTO ========== */
-  .bento-grid { max-width: 700px; margin: 0 auto 6rem; display: flex; flex-direction: column; gap: 1rem; }
-  .bento-card { background: var(--blanc); border: 1px solid var(--gris-200); border-radius: 16px; padding: 1.75rem 2rem; box-shadow: 0 2px 12px rgba(21,37,86,0.04); }
-  .bento-card--members { background: var(--bleu-clair); border-color: rgba(32,100,240,0.08); }
-  .bento-row { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; margin-bottom: 0.5rem; }
-  .bento-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .bento-text { display: flex; flex-direction: column; gap: 0.15rem; }
-  .bento-number { font-size: 3rem; font-weight: 700; color: var(--bleu-600); line-height: 1; font-variant-numeric: tabular-nums; }
-  .bento-card--members .bento-number { font-size: 3.5rem; }
-  .bento-label { font-size: 1.15rem; font-weight: 600; color: var(--bleu-950); }
-  .bento-desc { font-size: 0.875rem; line-height: 1.5; color: var(--gris-700); margin: 0; }
-  .bento-icon { width: 52px; height: 52px; color: var(--bleu-600); flex-shrink: 0; }
-  .bento-icon svg { width: 100%; height: 100%; }
-  .bento-icon-sm { width: 36px; height: 36px; color: var(--bleu-600); margin-bottom: 0.5rem; }
-  .bento-icon-sm svg { width: 100%; height: 100%; }
+  /* ========== KPI HERO ========== */
+  .kpi-hero {
+    max-width: 520px;
+    margin: 0 auto 6rem;
+    padding: 3rem 2rem;
+    background: var(--bleu-clair);
+    border: 1px solid rgba(32, 100, 240, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(21, 37, 86, 0.05);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .kpi-hero-icon {
+    width: 72px;
+    height: 72px;
+    color: var(--bleu-600);
+    margin-bottom: 0.5rem;
+  }
+  .kpi-hero-icon svg { width: 100%; height: 100%; }
+  .kpi-hero-number {
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--bleu-600);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .kpi-hero-label {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--bleu-950);
+    letter-spacing: -0.01em;
+  }
+  .kpi-hero-desc {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--gris-700);
+    margin: 0.5rem 0 0;
+    max-width: 360px;
+  }
 
   .user-head.u1,.user-body.u1{animation:user-pulse 3s ease-in-out infinite}
   .user-head.u2,.user-body.u2{animation:user-fade-in 3s ease-in-out infinite .3s}
   .user-head.u3,.user-body.u3{animation:user-fade-in 3s ease-in-out infinite .6s}
   @keyframes user-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
   @keyframes user-fade-in{0%,100%{opacity:.25}50%{opacity:.6}}
-  .reco-star{animation:star-twinkle 2.5s ease-in-out infinite}
-  .reco-star.s2{animation-delay:.4s}.reco-star.s3{animation-delay:.8s}
-  @keyframes star-twinkle{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
-  .cal-dot{animation:cal-pop 2s ease-in-out infinite}
-  .cal-dot.d2{animation-delay:.25s}.cal-dot.d3{animation-delay:.5s}
-  @keyframes cal-pop{0%,100%{opacity:.2;r:1.5}50%{opacity:1;r:2.5}}
 
   /* ========== STACK ========== */
   .testimonials-header { text-align: center; margin-bottom: 3rem; }
@@ -382,12 +418,25 @@
     position: relative;
     /* Extra bottom padding for the stack peek + dots */
     padding-bottom: 4rem;
-    cursor: grab;
+    cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
   }
 
-  .stack-zone:active { cursor: grabbing; }
+  .stack-zone.cursor-left {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><circle cx='20' cy='20' r='17' fill='%232064F0' stroke='white' stroke-width='2'/><polyline points='22 13 15 20 22 27' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/></svg>") 20 20, pointer;
+  }
+
+  .stack-zone.cursor-right {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><circle cx='20' cy='20' r='17' fill='%232064F0' stroke='white' stroke-width='2'/><polyline points='18 13 25 20 18 27' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/></svg>") 20 20, pointer;
+  }
+
+  /* Restore default cursor on interactive children */
+  .stack-zone .stack-arrow,
+  .stack-zone .stack-dot,
+  .stack-zone .stack-expand {
+    cursor: pointer;
+  }
 
   /* --- Card base --- */
   .stack-card {
@@ -488,8 +537,34 @@
   }
   .stack-dot.active { background: var(--bleu-600); transform: scale(1.3); }
 
+  /* Arrows — desktop only */
+  .stack-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--blanc);
+    border: 1px solid var(--gris-200);
+    color: var(--bleu-950);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(21, 37, 86, 0.08);
+    z-index: 5;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .stack-arrow:hover { background: var(--bleu-600); color: var(--blanc); border-color: var(--bleu-600); transform: translateY(-50%) scale(1.05); }
+  .stack-arrow--prev { left: -68px; }
+  .stack-arrow--next { right: -68px; }
+  @media (max-width: 900px) {
+    .stack-arrow { display: none; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .user-head,.user-body,.reco-star,.cal-dot{animation:none}
+    .user-head,.user-body{animation:none}
     .stack-card{transition:none!important}
   }
 
@@ -499,9 +574,10 @@
     .social-proof-inner { padding: 0 1.5rem; }
     .social-proof-subtitle { text-align: left; }
     .social-proof-title { font-size: 1.625rem; text-align: left; margin-bottom: 3rem; }
-    .bento-grid { margin-bottom: 4rem; }
-    .bento-row-2 { grid-template-columns: 1fr; }
-    .bento-card--members .bento-number { font-size: 3rem; }
+    .kpi-hero { margin-bottom: 4rem; padding: 2.25rem 1.5rem; }
+    .kpi-hero-icon { width: 56px; height: 56px; }
+    .kpi-hero-number { font-size: 3.75rem; }
+    .kpi-hero-label { font-size: 1.15rem; }
     .testimonials-header { text-align: left; margin-bottom: 2rem; }
     .testimonials-title { font-size: 1.5rem; text-align: left; }
     .stack-card { padding: 1.5rem 1.25rem; }
