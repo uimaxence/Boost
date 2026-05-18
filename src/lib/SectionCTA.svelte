@@ -227,9 +227,7 @@
 
   .cal-inline {
     width: 100%;
-    min-height: 400px;
-    max-height: 50vh;
-    overflow: auto;
+    min-height: 700px;
     border-radius: 12px;
   }
 
@@ -261,8 +259,6 @@
 
     .cal-inline {
       min-height: 600px;
-      max-height: none;
-      overflow: visible;
     }
 
     .cta-glow-left-1,

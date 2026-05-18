@@ -44,6 +44,37 @@
     }
   ];
 
+  // Bandeaux défilants — échantillon de membres
+  const marqueeRows = [
+    [
+      { name: 'Lucas', age: 24, service: 'Développeur web' },
+      { name: 'Emma', age: 22, service: 'Photographe' },
+      { name: 'Théo', age: 26, service: 'Coach sportif' },
+      { name: 'Léa', age: 19, service: 'Designer graphique' },
+      { name: 'Hugo', age: 28, service: 'Consultant marketing' },
+      { name: 'Manon', age: 23, service: 'Vidéaste' },
+      { name: 'Antoine', age: 25, service: "Architecte d'intérieur" }
+    ],
+    [
+      { name: 'Robin', age: 19, service: 'Nettoyage auto' },
+      { name: 'Chloé', age: 21, service: 'Rédactrice freelance' },
+      { name: 'Maxime', age: 27, service: 'Développeur mobile' },
+      { name: 'Sarah', age: 24, service: 'Community manager' },
+      { name: 'Charlotte', age: 21, service: 'Vidéaste, photographe' },
+      { name: 'Noémie', age: 26, service: 'Ostéopathe animaux' },
+      { name: 'Jules', age: 23, service: 'Plombier' }
+    ],
+    [
+      { name: 'Inès', age: 25, service: 'Avocate' },
+      { name: 'Nathan', age: 22, service: 'Monteur vidéo' },
+      { name: 'Camille', age: 24, service: 'Coach business' },
+      { name: 'Léo', age: 26, service: 'Graphiste' },
+      { name: 'Romane', age: 20, service: 'Pâtissière' },
+      { name: 'Mathis', age: 23, service: 'Électricien' },
+      { name: 'Alice', age: 25, service: 'Architecte' }
+    ]
+  ];
+
   const N = testimonials.length;
   const AUTO_DELAY = 5000;
   const SWIPE_THRESH = 80;
@@ -227,21 +258,43 @@
       Ils ont déjà rejoint le <span class="highlight">club Boost</span>
     </h2>
 
-    <!-- KPI hero -->
-    <div class="kpi-hero">
-      <div class="kpi-hero-icon" aria-hidden="true">
-        <svg viewBox="0 0 40 40" fill="none">
-          <circle class="user-head u1" cx="20" cy="12" r="5" fill="currentColor"/>
-          <path class="user-body u1" d="M10 32c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <circle class="user-head u2" cx="33" cy="14" r="3.5" fill="currentColor" opacity="0.4"/>
-          <path class="user-body u2" d="M27 32c0-4 2.5-7 6-8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
-          <circle class="user-head u3" cx="7" cy="14" r="3.5" fill="currentColor" opacity="0.4"/>
-          <path class="user-body u3" d="M13 32c0-4-2.5-7-6-8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
-        </svg>
+    <!-- KPI : card flottante + bandeaux défilants derrière -->
+    <div class="kpi-stack">
+      <!-- Bandeaux de membres défilants (en arrière-plan) -->
+      <div class="members-marquee" aria-hidden="true">
+        {#each marqueeRows as row, ri}
+          <div class="marquee-row marquee-row--{ri + 1}">
+            <div class="marquee-track">
+              {#each [...row, ...row] as m, i}
+                <div class="marquee-chip">
+                  <span class="chip-dot"></span>
+                  <span class="chip-text">
+                    <strong>{m.name}</strong>, {m.age} ans
+                    <span class="chip-sep">·</span>
+                    <span class="chip-service">{m.service}</span>
+                  </span>
+                </div>
+              {/each}
+            </div>
+          </div>
+        {/each}
       </div>
-      <span class="kpi-hero-number" data-counter="45">0</span>
-      <span class="kpi-hero-label">Membres actifs</span>
-      <p class="kpi-hero-desc">Rejoins-nous pour construire le 1er réseau freelance de France.</p>
+
+      <div class="kpi-hero">
+        <div class="kpi-hero-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle class="user-head u1" cx="20" cy="12" r="5" fill="currentColor"/>
+            <path class="user-body u1" d="M10 32c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <circle class="user-head u2" cx="33" cy="14" r="3.5" fill="currentColor" opacity="0.4"/>
+            <path class="user-body u2" d="M27 32c0-4 2.5-7 6-8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
+            <circle class="user-head u3" cx="7" cy="14" r="3.5" fill="currentColor" opacity="0.4"/>
+            <path class="user-body u3" d="M13 32c0-4-2.5-7-6-8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
+          </svg>
+        </div>
+        <span class="kpi-hero-number" data-counter="45">0</span>
+        <span class="kpi-hero-label">Membres actifs</span>
+        <p class="kpi-hero-desc">Rejoins-nous pour construire le 1er réseau freelance de France.</p>
+      </div>
     </div>
 
     <!-- Témoignages stack -->
@@ -353,19 +406,31 @@
   .social-proof-title .highlight, .testimonials-title .highlight { color: var(--bleu-600); }
 
   /* ========== KPI HERO ========== */
+  .kpi-stack {
+    position: relative;
+    margin: 0 0 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 320px;
+  }
+
   .kpi-hero {
     max-width: 520px;
-    margin: 0 auto 6rem;
+    margin: 0 auto;
     padding: 3rem 2rem;
     background: var(--bleu-clair);
     border: 1px solid rgba(32, 100, 240, 0.08);
     border-radius: 20px;
-    box-shadow: 0 4px 24px rgba(21, 37, 86, 0.05);
+    box-shadow: 0 8px 28px rgba(21, 37, 86, 0.08);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+    position: relative;
+    z-index: 2;
+    width: 100%;
   }
   .kpi-hero-icon {
     width: 72px;
@@ -401,6 +466,83 @@
   .user-head.u3,.user-body.u3{animation:user-fade-in 3s ease-in-out infinite .6s}
   @keyframes user-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
   @keyframes user-fade-in{0%,100%{opacity:.25}50%{opacity:.6}}
+
+  /* ========== MEMBERS MARQUEE ========== */
+  .members-marquee {
+    /* Positioned behind the KPI card, full viewport width */
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 50vw);
+    right: calc(50% - 50vw);
+    width: 100vw;
+    transform: translateY(-50%);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
+  .marquee-row {
+    display: flex;
+    overflow: hidden;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 0.75rem;
+    width: max-content;
+    padding-right: 0.75rem;
+    will-change: transform;
+  }
+
+  .marquee-row--1 .marquee-track { animation: marquee-left 55s linear infinite; }
+  .marquee-row--2 .marquee-track { animation: marquee-right 65s linear infinite; }
+  .marquee-row--3 .marquee-track { animation: marquee-left 75s linear infinite; }
+
+  @keyframes marquee-left {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
+  }
+  @keyframes marquee-right {
+    from { transform: translate3d(-50%, 0, 0); }
+    to   { transform: translate3d(0, 0, 0); }
+  }
+
+  .members-marquee:hover .marquee-track { animation-play-state: paused; }
+
+  .marquee-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 1.05rem;
+    background: var(--blanc);
+    border: 1px solid var(--gris-200);
+    border-radius: 999px;
+    box-shadow: 0 1px 4px rgba(21, 37, 86, 0.04);
+    font-size: 0.9rem;
+    color: var(--bleu-950);
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+
+  .chip-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--bleu-600);
+    flex-shrink: 0;
+  }
+
+  .marquee-row--2 .chip-dot { background: #6FA8FF; }
+  .marquee-row--3 .chip-dot { background: var(--bleu-700); }
+
+  .chip-text { display: inline-flex; gap: 0.4rem; align-items: baseline; }
+  .chip-text strong { font-weight: 600; }
+  .chip-sep { color: var(--gris-200); }
+  .chip-service { color: var(--gris-700); }
 
   /* ========== STACK ========== */
   .testimonials-header { text-align: center; margin-bottom: 3rem; }
@@ -566,6 +708,7 @@
   @media (prefers-reduced-motion: reduce) {
     .user-head,.user-body{animation:none}
     .stack-card{transition:none!important}
+    .marquee-track{animation:none!important}
   }
 
   /* ========== MOBILE ========== */
@@ -574,10 +717,30 @@
     .social-proof-inner { padding: 0 1.5rem; }
     .social-proof-subtitle { text-align: left; }
     .social-proof-title { font-size: 1.625rem; text-align: left; margin-bottom: 3rem; }
-    .kpi-hero { margin-bottom: 4rem; padding: 2.25rem 1.5rem; }
+    .kpi-stack {
+      min-height: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .kpi-hero { padding: 2.25rem 1.5rem; }
     .kpi-hero-icon { width: 56px; height: 56px; }
     .kpi-hero-number { font-size: 3.75rem; }
     .kpi-hero-label { font-size: 1.15rem; }
+    .members-marquee {
+      position: static;
+      transform: none;
+      top: auto;
+      left: auto;
+      right: auto;
+      width: calc(100% + 3rem);
+      margin-left: -1.5rem;
+      margin-right: -1.5rem;
+      gap: 0.6rem;
+    }
+    .marquee-chip { font-size: 0.8rem; padding: 0.45rem 0.85rem; gap: 0.45rem; }
+    .chip-dot { width: 6px; height: 6px; }
     .testimonials-header { text-align: left; margin-bottom: 2rem; }
     .testimonials-title { font-size: 1.5rem; text-align: left; }
     .stack-card { padding: 1.5rem 1.25rem; }
