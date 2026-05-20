@@ -67,26 +67,6 @@
       .duration(400)
       .attr('opacity', 1);
 
-    // Ligne pointillée Angers ↔ Rennes
-    const angersXY = projection(AGENCIES[0].coords);
-    const rennesXY = projection(AGENCIES[1].coords);
-
-    svg.append('line')
-      .attr('x1', angersXY[0])
-      .attr('y1', angersXY[1])
-      .attr('x2', angersXY[0])
-      .attr('y2', angersXY[1])
-      .attr('stroke', '#94a3b8')
-      .attr('stroke-width', 1)
-      .attr('stroke-dasharray', '5,5')
-      .attr('opacity', 0.25)
-      .transition()
-      .delay(150)
-      .duration(500)
-      .ease(d3.easeQuadOut)
-      .attr('x2', rennesXY[0])
-      .attr('y2', rennesXY[1]);
-
     // Markers
     const markersGroup = svg.append('g').attr('class', 'markers');
 

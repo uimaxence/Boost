@@ -10,11 +10,24 @@
   import SectionOffre from './lib/SectionOffre.svelte';
   import SectionCTA from './lib/SectionCTA.svelte';
   import Footer from './lib/Footer.svelte';
+  import MentionsLegales from './lib/MentionsLegales.svelte';
+  import Credits from './lib/Credits.svelte';
   import { onMount } from 'svelte';
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
   gsap.registerPlugin(ScrollTrigger);
+
+  const path = typeof window !== 'undefined' ? window.location.pathname : '/';
+  const route =
+    path === '/mentions-legales' ? 'mentions' :
+    path === '/credits' ? 'credits' :
+    'home';
+
+  const pageTitle =
+    route === 'mentions' ? 'Mentions légales — Boost' :
+    route === 'credits' ? 'Crédits — Boost' :
+    'Boost — Rejoins le Club';
 
   // Évite que ScrollTrigger ne réajuste la position quand la barre d'adresse
   // mobile (iOS Safari) apparaît/disparaît : c'est ce qui provoquait le
@@ -49,21 +62,27 @@
 </script>
 
 <svelte:head>
-  <title>Boost — Rejoins le Club</title>
+  <title>{pageTitle}</title>
 </svelte:head>
 
-<Header />
+{#if route === 'mentions'}
+  <MentionsLegales />
+{:else if route === 'credits'}
+  <Credits />
+{:else}
+  <Header />
 
-<main>
-  <Hero />
-  <SectionCollectif />
-  <SectionPiliers />
-  <SectionSocialProof />
-  <SectionFondateur />
-  <SectionSteps />
-  <SectionFAQ />
-  <SectionOffre />
-  <SectionCTA />
-</main>
+  <main>
+    <Hero />
+    <SectionCollectif />
+    <SectionPiliers />
+    <SectionSocialProof />
+    <SectionFondateur />
+    <SectionSteps />
+    <SectionFAQ />
+    <SectionOffre />
+    <SectionCTA />
+  </main>
 
-<Footer />
+  <Footer />
+{/if}
