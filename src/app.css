@@ -91,17 +91,7 @@ img {
   display: block;
 }
 
-/* Sections animées au scroll : cachées seulement quand JS contrôle l'anim.
-   Sans .js-active (JS bloqué) → restent visibles plutôt que page blanche. */
-.js-active:not(.reveal-fallback) [data-reveal] {
-  opacity: 0;
-}
-
-/* Filet de sécurité après 2,5s : force la visibilité même si GSAP a déjà
-   posé des inline-styles opacity:0 / transform sur les sections en attente
-   de ScrollTrigger (cas typique en webview Instagram où le trigger ne
-   se déclenche jamais). !important nécessaire pour battre l'inline-style. */
-.reveal-fallback [data-reveal] {
-  opacity: 1 !important;
-  transform: none !important;
-}
+/* Les sections [data-reveal] sont visibles par défaut.
+   GSAP applique opacity:0 en inline-style dès l'initialisation (immediateRender),
+   le "flash" entre rendu Svelte et init GSAP est imperceptible (~1 frame),
+   et si GSAP plante (webview restrictive) la page reste lisible. */
