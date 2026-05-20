@@ -38,26 +38,6 @@
     // Désactive l'auto-refresh de ScrollTrigger pour éviter les sauts de scroll
     // quand le contenu change de taille (images, embed Cal, etc.)
     ScrollTrigger.config({ autoRefreshEvents: 'visibilitychange' });
-
-    gsap.utils.toArray('[data-reveal]').forEach((el) => {
-      gsap.fromTo(el,
-        { opacity: 0, y: 32 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 88%',
-            toggleActions: 'play none none none'
-          }
-        }
-      );
-    });
-
-    // Refresh unique après que tout le contenu soit chargé
-    setTimeout(() => ScrollTrigger.refresh(), 2000);
   });
 </script>
 
