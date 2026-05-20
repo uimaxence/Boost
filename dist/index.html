@@ -10,9 +10,42 @@
   <body>
     <div id="app">
       <noscript>Pour utiliser ce site, veuillez activer JavaScript dans votre navigateur.</noscript>
-      <div style="display:flex;min-height:100vh;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;color:#152556;">
+      <div id="loading-fallback" style="display:flex;min-height:100vh;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;color:#152556;">
         Chargement…
       </div>
     </div>
+    <script>
+      // Affiche toute erreur JS directement à l'écran (debug mobile sans console)
+      (function () {
+        function show(label, detail) {
+          var app = document.getElementById('app');
+          if (!app) return;
+          var box = document.getElementById('debug-error-box');
+          if (!box) {
+            box = document.createElement('pre');
+            box.id = 'debug-error-box';
+            box.style.cssText = 'margin:16px;padding:12px;background:#fff5f5;border:1px solid #f5c6c6;color:#8a1f1f;font-family:ui-monospace,Menlo,monospace;font-size:11px;white-space:pre-wrap;word-break:break-word;border-radius:8px;';
+            app.appendChild(box);
+          }
+          box.textContent += '[' + label + '] ' + detail + '\n\n';
+          var loader = document.getElementById('loading-fallback');
+          if (loader) loader.style.display = 'none';
+        }
+        window.addEventListener('error', function (e) {
+          show('Error', (e.message || 'unknown') + '\n  at ' + (e.filename || '?') + ':' + e.lineno + ':' + e.colno);
+        });
+        window.addEventListener('unhandledrejection', function (e) {
+          var r = e.reason;
+          show('Promise', r && r.stack ? r.stack : (r && r.message) || String(r));
+        });
+        // Si rien n'a remplacé "Chargement…" au bout de 6s, le signaler
+        setTimeout(function () {
+          var loader = document.getElementById('loading-fallback');
+          if (loader && loader.offsetParent !== null) {
+            show('Timeout', 'Aucun montage Svelte après 6s. Le bundle JS est-il chargé ?');
+          }
+        }, 6000);
+      })();
+    </script>
   </body>
 </html>
