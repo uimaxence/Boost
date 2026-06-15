@@ -93,7 +93,7 @@
           <path d="M7 17L17 7M17 7H8M17 7v9"/>
         </svg>
       </a>
-      <p class="mobile-footer-note">contact@boostapp.fr</p>
+      <p class="mobile-footer-note">contact@joinboost.fr</p>
     </div>
   </div>
 {/if}

@@ -16,7 +16,7 @@
     <section>
       <h2>Éditeur du site</h2>
       <p>Club Boost</p>
-      <p>Contact : <a href="mailto:contact@boostapp.fr">contact@boostapp.fr</a></p>
+      <p>Contact : <a href="mailto:contact@joinboost.fr">contact@joinboost.fr</a></p>
     </section>
 
     <section>
@@ -31,7 +31,7 @@
 
     <section>
       <h2>Données personnelles</h2>
-      <p>Les informations que vous nous transmettez via les formulaires sont utilisées uniquement dans le cadre de votre demande. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données, en nous contactant à <a href="mailto:contact@boostapp.fr">contact@boostapp.fr</a>.</p>
+      <p>Les informations que vous nous transmettez via les formulaires sont utilisées uniquement dans le cadre de votre demande. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données, en nous contactant à <a href="mailto:contact@joinboost.fr">contact@joinboost.fr</a>.</p>
     </section>
   </div>
 </main>

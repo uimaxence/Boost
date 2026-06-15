@@ -2,7 +2,7 @@
   import logoSvg from '../../assets/logo.svg?url';
 
   let copied = false;
-  const email = 'contact@boostapp.fr';
+  const email = 'contact@joinboost.fr';
 
   async function copyEmail() {
     try {
