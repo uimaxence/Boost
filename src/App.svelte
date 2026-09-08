@@ -12,21 +12,40 @@
   import Footer from './lib/Footer.svelte';
   import MentionsLegales from './lib/MentionsLegales.svelte';
   import Credits from './lib/Credits.svelte';
+  import SectionBlog from './lib/blog/SectionBlog.svelte';
+  import BlogIndex from './lib/blog/BlogIndex.svelte';
+  import ArticlePage from './lib/blog/ArticlePage.svelte';
+  import { getArticle, BLOG_TITLE, SITE_NAME } from './lib/blog/articles.js';
   import { onMount } from 'svelte';
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const path = typeof window !== 'undefined' ? window.location.pathname : '/';
-  const route =
-    path === '/mentions-legales' ? 'mentions' :
-    path === '/credits' ? 'credits' :
-    'home';
+  // Routage minimal basé sur le pathname (pas de navigation côté client :
+  // chaque page est un chargement complet, cf. la réécriture SPA dans vercel.json).
+  const rawPath = typeof window !== 'undefined' ? window.location.pathname : '/';
+  const path = rawPath.length > 1 ? rawPath.replace(/\/+$/, '') : rawPath;
+
+  let route = 'home';
+  let article = null;
+
+  if (path === '/mentions-legales') {
+    route = 'mentions';
+  } else if (path === '/credits') {
+    route = 'credits';
+  } else if (path === '/blog') {
+    route = 'blog';
+  } else if (path.startsWith('/blog/')) {
+    article = getArticle(decodeURIComponent(path.slice('/blog/'.length)));
+    route = article ? 'article' : 'blog';
+  }
 
   const pageTitle =
     route === 'mentions' ? 'Mentions légales — Boost' :
     route === 'credits' ? 'Crédits — Boost' :
+    route === 'blog' ? BLOG_TITLE :
+    route === 'article' ? `${article.title} — ${SITE_NAME}` :
     'Boost — Rejoins le Club';
 
   // Évite que ScrollTrigger ne réajuste la position quand la barre d'adresse
@@ -68,6 +87,10 @@
   <MentionsLegales />
 {:else if route === 'credits'}
   <Credits />
+{:else if route === 'blog'}
+  <BlogIndex />
+{:else if route === 'article'}
+  <ArticlePage {article} />
 {:else}
   <Header />
 
@@ -76,6 +99,7 @@
     <SectionCollectif />
     <SectionPiliers />
     <SectionSocialProof />
+    <SectionBlog />
     <SectionFondateur />
     <SectionSteps />
     <SectionFAQ />

@@ -3,6 +3,9 @@
   import logoSvg from '../../assets/logo.svg?url';
   import ButtonCta from './ButtonCta.svelte';
 
+  /** Fond plus opaque quand le header flotte au-dessus de texte (pages blog) */
+  export let solid = false;
+
   let open = false;
   let inverted = false;
   let headerEl;
@@ -10,7 +13,7 @@
   function close() { open = false; }
 
   onMount(() => {
-    const darkSelectors = '.piliers, .fondateur, .cta-final';
+    const darkSelectors = '.piliers, .fondateur, .cta-final, [data-header-dark]';
 
     function update() {
       if (!headerEl) return;
@@ -30,22 +33,23 @@
   });
 </script>
 
-<header class="header" class:menu-open={open} class:inverted bind:this={headerEl}>
+<header class="header" class:menu-open={open} class:inverted class:solid bind:this={headerEl}>
   <a href="/" class="logo" aria-label="Boost accueil">
     <img src={logoSvg} alt="" width="70" height="41" aria-hidden="true" />
   </a>
   <span class="divider" aria-hidden="true"></span>
 
   <nav class="nav" aria-label="Navigation principale">
-    <a href="#concept">Le concept</a>
-    <a href="#temoignages">Témoignages</a>
-    <a href="#offre">Tarifs</a>
-    <a href="#faq">FAQ</a>
+    <a href="/#concept">Le concept</a>
+    <a href="/#temoignages">Témoignages</a>
+    <a href="/#offre">Tarifs</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/#blog">Blog</a>
   </nav>
   <span class="divider" aria-hidden="true"></span>
 
   <span class="header-cta">
-    <ButtonCta href="#candidater" label="Candidater" />
+    <ButtonCta href="/#candidater" label="Candidater" />
   </span>
 
   <button
@@ -64,30 +68,35 @@
 {#if open}
   <div class="mobile-overlay" role="dialog" aria-modal="true" aria-label="Menu">
     <nav class="mobile-nav">
-      <a href="#concept" on:click={close}>
+      <a href="/#concept" on:click={close}>
         <span class="mobile-nav-num">01</span>
         <span class="mobile-nav-label">Le concept</span>
         <span class="mobile-nav-arrow">→</span>
       </a>
-      <a href="#temoignages" on:click={close}>
+      <a href="/#temoignages" on:click={close}>
         <span class="mobile-nav-num">02</span>
         <span class="mobile-nav-label">Témoignages</span>
         <span class="mobile-nav-arrow">→</span>
       </a>
-      <a href="#offre" on:click={close}>
+      <a href="/#offre" on:click={close}>
         <span class="mobile-nav-num">03</span>
         <span class="mobile-nav-label">Tarifs</span>
         <span class="mobile-nav-arrow">→</span>
       </a>
-      <a href="#faq" on:click={close}>
+      <a href="/#faq" on:click={close}>
         <span class="mobile-nav-num">04</span>
         <span class="mobile-nav-label">FAQ</span>
+        <span class="mobile-nav-arrow">→</span>
+      </a>
+      <a href="/#blog" on:click={close}>
+        <span class="mobile-nav-num">05</span>
+        <span class="mobile-nav-label">Blog</span>
         <span class="mobile-nav-arrow">→</span>
       </a>
     </nav>
 
     <div class="mobile-footer">
-      <a href="#candidater" class="btn-cta-mobile" on:click={close}>
+      <a href="/#candidater" class="btn-cta-mobile" on:click={close}>
         Candidater au Club
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M7 17L17 7M17 7H8M17 7v9"/>
@@ -190,6 +199,19 @@
     transform: translateY(-8px) rotate(-45deg);
   }
 
+  /* Variante opaque (pages texte) */
+  .header.solid:not(.inverted) {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: var(--gris-200);
+    box-shadow: 0 10px 30px -20px rgba(21, 37, 86, 0.35);
+  }
+
+  .header.solid.menu-open {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
   /* Inversion sur fond sombre */
   .header.inverted {
     background: rgba(0, 0, 0, 0.2);
@@ -221,6 +243,11 @@
 
   .header.menu-open .logo {
     filter: invert(1) brightness(2);
+  }
+
+  /* Menu ouvert alors que le header est déjà inversé : on évite la double inversion (logo noir) */
+  .header.menu-open.inverted .logo img {
+    filter: none;
   }
 
   .mobile-overlay {
@@ -306,7 +333,7 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      padding: 1.5rem 0.25rem;
+      padding: 1.25rem 0.25rem;
       color: var(--blanc);
       font-weight: 600;
       font-size: 1.75rem;
@@ -318,6 +345,8 @@
     .mobile-nav a:nth-child(1) { animation-delay: 0.08s; }
     .mobile-nav a:nth-child(2) { animation-delay: 0.16s; }
     .mobile-nav a:nth-child(3) { animation-delay: 0.24s; }
+    .mobile-nav a:nth-child(4) { animation-delay: 0.32s; }
+    .mobile-nav a:nth-child(5) { animation-delay: 0.40s; }
 
     @keyframes navItemIn {
       from { opacity: 0; transform: translateX(-20px); }

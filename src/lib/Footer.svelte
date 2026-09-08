@@ -36,11 +36,12 @@
 
       <div class="footer-col">
         <h4 class="footer-col-title">Le Club</h4>
-        <a href="#concept">Le concept</a>
-        <a href="#temoignages">Témoignages</a>
-        <a href="#offre">Tarifs</a>
-        <a href="#faq">FAQ</a>
-        <a href="#candidater">Candidater</a>
+        <a href="/#concept">Le concept</a>
+        <a href="/#temoignages">Témoignages</a>
+        <a href="/#offre">Tarifs</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/blog">Blog</a>
+        <a href="/#candidater">Candidater</a>
       </div>
 
       <div class="footer-col">

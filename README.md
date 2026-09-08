@@ -23,6 +23,24 @@ npm run preview   # prévisualiser le build
 - **Header** : logo, liens (Le concept, Les clubs, FAQ), bouton Candidater, menu burger sur mobile
 - **Sections** : Hero, Section bleue (3 cartes), FAQ accordéon, Calendrier (Cal.com), Carte France + graphique, Statistiques, Témoignages, répétition Hero/FAQ, Footer
 
+## Blog
+
+- **Section « Blog » sur la home** : `src/lib/blog/SectionBlog.svelte` (article à la une + 3 derniers).
+- **Index** : `/blog` → `src/lib/blog/BlogIndex.svelte`.
+- **Template d'article** : `/blog/<slug>` → `src/lib/blog/ArticlePage.svelte` (photo en tête, titre sur carte blanche, métadonnées + partage, sommaire fixe, contenu).
+
+### Ajouter un article
+
+1. Ajoute un objet en tête du tableau `articles` dans `src/lib/blog/articles.js` (la structure et les types de blocs sont documentés en haut du fichier). Chaque `section` devient une entrée du sommaire.
+2. Dépose les photos dans `public/blog/<slug>/` et renseigne `cover: '/blog/<slug>/cover.jpg'` (photo en tête) ; ajoute des blocs `image` / `gallery` dans le contenu.
+3. Génère le visuel de partage (1200x630, affiché quand le lien est partagé sur LinkedIn, WhatsApp, X…) :
+   ```bash
+   npm run og -- <slug>                     # visuel de marque
+   npm run og -- <slug> --photo photo.jpg   # avec une photo en fond
+   ```
+   Il est écrit dans `public/blog/<slug>/og.jpg` et référencé par `ogImage`. Nécessite Playwright Python (`python3 -m pip install playwright && python3 -m playwright install chromium`).
+4. `npm run build` : le plugin `scripts/blog-prerender.js` génère `dist/blog/<slug>/index.html` avec les balises `<title>`, Open Graph, Twitter et JSON-LD de l'article (les robots des réseaux sociaux n'exécutent pas le JS). Vercel sert ces fichiers avant la réécriture SPA.
+
 ## Personnalisation
 
 - **Cal.com** : dans `src/App.svelte`, remplace l’`src` de l’iframe par ton lien Cal.com.
