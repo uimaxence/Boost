@@ -71,6 +71,10 @@
         <a href="/mentions-legales">Mentions légales</a>
         <span class="footer-sep">·</span>
         <a href="/credits">Crédits</a>
+        <span class="footer-sep">·</span>
+        <a href="https://maxence-cailleau.fr" target="_blank" rel="noopener" class="footer-made-by">
+          Fait par <strong>Maxence Cailleau</strong>
+        </a>
       </div>
     </div>
   </div>
@@ -230,6 +234,16 @@
   }
 
   .footer-legal a:hover {
+    color: var(--bleu-600);
+  }
+
+  .footer-made-by strong {
+    font-weight: 500;
+    color: var(--gris-700);
+    transition: color 0.2s;
+  }
+
+  .footer-made-by:hover strong {
     color: var(--bleu-600);
   }
 

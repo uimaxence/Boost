@@ -15,7 +15,7 @@
 
     <section>
       <h2>Conception et développement</h2>
-      <p>Site conçu et développé par <strong>Maxence Cailleau</strong>.</p>
+      <p>Site conçu et développé par <a href="https://maxence-cailleau.fr" target="_blank" rel="noopener"><strong>Maxence Cailleau</strong></a>.</p>
     </section>
 
     <section>
@@ -89,6 +89,17 @@
   }
 
   strong { color: var(--bleu-950); font-weight: 600; }
+
+  p a {
+    color: var(--bleu-600);
+    text-decoration: underline;
+    text-decoration-color: rgba(32, 100, 240, 0.35);
+    text-underline-offset: 3px;
+  }
+
+  p a strong { color: inherit; }
+
+  p a:hover { text-decoration-color: var(--bleu-600); }
 
   @media (max-width: 768px) {
     .static-header { padding: 1rem 1.5rem; }
