@@ -61,7 +61,7 @@ export const articles = [
     location: 'Angers',
     author: 'matteo',
     cover: '/blog/soiree-de-rentree-club-boost-angers/cover.webp',
-    coverAlt: "Les participants à la soirée de rentrée du Club Boost, au Pod Coworking à Angers",
+    coverAlt: "Les participants écoutent les présentations lors de la soirée de rentrée du Club Boost, au Pod Coworking à Angers",
     ogImage: '/blog/soiree-de-rentree-club-boost-angers/og.jpg',
     sections: [
       {
