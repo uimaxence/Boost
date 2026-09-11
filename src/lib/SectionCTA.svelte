@@ -29,24 +29,25 @@
         }
         p(cal, ar);
       };
-    })(window, 'https://app.cal.eu/embed/embed.js', 'init');
+    })(window, 'https://app.cal.com/embed/embed.js', 'init');
 
-    window.Cal('init', '15min', { origin: 'https://app.cal.eu' });
+    window.Cal('init', 'appel-de-decouverte-de-l-ecosysteme-boost', { origin: 'https://app.cal.com' });
+    window.Cal.config = window.Cal.config || {};
+    window.Cal.config.forwardQueryParams = true;
 
-    window.Cal.ns['15min']('inline', {
-      elementOrSelector: '#my-cal-inline-15min',
-      config: { layout: 'month_view' },
-      calLink: 'matteorbrt/15min',
+    window.Cal.ns['appel-de-decouverte-de-l-ecosysteme-boost']('inline', {
+      elementOrSelector: '#my-cal-inline-appel-de-decouverte-de-l-ecosysteme-boost',
+      config: { layout: 'month_view', useSlotsViewOnSmallScreen: 'true' },
+      calLink: 'm.robert/appel-de-decouverte-de-l-ecosysteme-boost',
     });
 
-    window.Cal.ns['15min']('ui', {
+    window.Cal.ns['appel-de-decouverte-de-l-ecosysteme-boost']('ui', {
       hideEventTypeDetails: false,
       layout: 'month_view',
       cssVarsPerTheme: {
         light: { 'cal-border-booker-width': '0px' },
       },
     });
-
   });
 </script>
 
@@ -65,7 +66,7 @@
     <h2 class="cta-title">Pour rejoindre <span class="cta-highlight">l'aventure</span>, c'est par ici</h2>
     <p class="cta-subtitle">Réserve un appel de découverte de 15 min avec notre équipe pour en savoir plus sur le Club Boost.</p>
     <div class="cta-cal-wrapper">
-      <div id="my-cal-inline-15min" class="cal-inline"></div>
+      <div id="my-cal-inline-appel-de-decouverte-de-l-ecosysteme-boost" class="cal-inline"></div>
     </div>
   </div>
 </section>
