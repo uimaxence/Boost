@@ -48,13 +48,13 @@
             <span class="offre-card-sub">Sans engagement, résiliable à tout moment</span>
           </div>
           <div class="offre-price">
-            <span class="offre-amount">19,00&nbsp;€</span>
+            <span class="offre-amount">24,99&nbsp;€</span>
             <span class="offre-period">/mois</span>
           </div>
         </div>
 
         <p class="offre-card-note">
-          Soit 4,45 € par semaine, l'équivalent d'un cappuccino en terrasse.
+          Soit 5,77 € par semaine, l'équivalent d'un cappuccino en terrasse.
         </p>
 
         <div class="offre-divider"></div>
