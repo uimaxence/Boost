@@ -1,6 +1,7 @@
 // Plugin Vite : après le build, génère une page HTML statique par article
-// (dist/blog/<slug>/index.html) et pour l'index (dist/blog/index.html),
-// avec les bonnes balises <title>, description, Open Graph, Twitter et JSON-LD.
+// (dist/blog/<slug>/index.html), pour l'index (dist/blog/index.html) et pour
+// les pages légales (dist/cgu/index.html, …), avec les bonnes balises <title>,
+// description, Open Graph, Twitter et JSON-LD.
 //
 // Pourquoi : les robots des réseaux sociaux (LinkedIn, WhatsApp, X…) n'exécutent
 // pas le JavaScript. Sans ces fichiers, tous les liens partagés afficheraient
@@ -20,6 +21,7 @@ import {
   articleUrl,
   articleShareImage,
 } from '../src/lib/blog/articles.js';
+import { legalPages } from '../src/lib/legal/index.js';
 
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -111,11 +113,27 @@ export function applyMeta(template, meta) {
   return html;
 }
 
+function legalMeta(page) {
+  return {
+    title: `${page.title} — ${SITE_NAME}`,
+    description: page.description,
+    url: `${SITE_URL}${page.path}`,
+    image: `${SITE_URL}/og-image.jpg`,
+    type: 'website',
+    keepImageSize: true,
+    extraTags: [],
+  };
+}
+
 export function blogPages() {
   return [
     { dir: BLOG_PATH.replace(/^\//, ''), meta: indexMeta() },
     ...articles.map((a) => ({ dir: `${BLOG_PATH.replace(/^\//, '')}/${a.slug}`, meta: articleMeta(a) })),
   ];
+}
+
+export function staticPages() {
+  return legalPages.map((p) => ({ dir: p.path.replace(/^\//, ''), meta: legalMeta(p) }));
 }
 
 export function blogPrerender() {
@@ -129,13 +147,13 @@ export function blogPrerender() {
     },
     closeBundle() {
       const template = readFileSync(join(outDir, 'index.html'), 'utf8');
-      const pages = blogPages();
+      const pages = [...blogPages(), ...staticPages()];
       for (const page of pages) {
         const dir = join(outDir, page.dir);
         mkdirSync(dir, { recursive: true });
         writeFileSync(join(dir, 'index.html'), applyMeta(template, page.meta));
       }
-      console.log(`\n[blog] ${pages.length} page(s) pré-rendue(s) : ${pages.map((p) => '/' + p.dir).join(', ')}\n`);
+      console.log(`\n[prerender] ${pages.length} page(s) pré-rendue(s) : ${pages.map((p) => '/' + p.dir).join(', ')}\n`);
     },
   };
 }

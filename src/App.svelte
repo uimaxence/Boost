@@ -10,12 +10,13 @@
   import SectionOffre from './lib/SectionOffre.svelte';
   import SectionCTA from './lib/SectionCTA.svelte';
   import Footer from './lib/Footer.svelte';
-  import MentionsLegales from './lib/MentionsLegales.svelte';
+  import LegalPage from './lib/legal/LegalPage.svelte';
   import Credits from './lib/Credits.svelte';
   import SectionBlog from './lib/blog/SectionBlog.svelte';
   import BlogIndex from './lib/blog/BlogIndex.svelte';
   import ArticlePage from './lib/blog/ArticlePage.svelte';
   import { getArticle, BLOG_TITLE, SITE_NAME } from './lib/blog/articles.js';
+  import { getLegalPage } from './lib/legal/index.js';
   import { onMount } from 'svelte';
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -29,9 +30,10 @@
 
   let route = 'home';
   let article = null;
+  const legalPage = getLegalPage(path); // /cgu, /confidentialite, /mentions-legales
 
-  if (path === '/mentions-legales') {
-    route = 'mentions';
+  if (legalPage) {
+    route = 'legal';
   } else if (path === '/credits') {
     route = 'credits';
   } else if (path === '/blog') {
@@ -42,7 +44,7 @@
   }
 
   const pageTitle =
-    route === 'mentions' ? 'Mentions légales — Boost' :
+    route === 'legal' ? `${legalPage.title} — ${SITE_NAME}` :
     route === 'credits' ? 'Crédits — Boost' :
     route === 'blog' ? BLOG_TITLE :
     route === 'article' ? `${article.title} — ${SITE_NAME}` :
@@ -83,8 +85,8 @@
   <title>{pageTitle}</title>
 </svelte:head>
 
-{#if route === 'mentions'}
-  <MentionsLegales />
+{#if route === 'legal'}
+  <LegalPage page={legalPage} />
 {:else if route === 'credits'}
   <Credits />
 {:else if route === 'blog'}

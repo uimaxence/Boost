@@ -68,6 +68,10 @@
     <div class="footer-bottom">
       <span class="footer-copy">&copy; {new Date().getFullYear()} Club Boost. Tous droits réservés.</span>
       <div class="footer-legal">
+        <a href="/cgu">CGU</a>
+        <span class="footer-sep">·</span>
+        <a href="/confidentialite">Confidentialité</a>
+        <span class="footer-sep">·</span>
         <a href="/mentions-legales">Mentions légales</a>
         <span class="footer-sep">·</span>
         <a href="/credits">Crédits</a>
@@ -222,6 +226,7 @@
 
   .footer-legal {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.5rem;
   }

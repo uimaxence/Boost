@@ -41,12 +41,24 @@ npm run preview   # prévisualiser le build
    Il est écrit dans `public/blog/<slug>/og.jpg` et référencé par `ogImage`. Nécessite Playwright Python (`python3 -m pip install playwright && python3 -m playwright install chromium`).
 4. `npm run build` : le plugin `scripts/blog-prerender.js` génère `dist/blog/<slug>/index.html` avec les balises `<title>`, Open Graph, Twitter et JSON-LD de l'article (les robots des réseaux sociaux n'exécutent pas le JS). Vercel sert ces fichiers avant la réécriture SPA.
 
+## Pages légales
+
+Trois pages, une seule mise en page (`src/lib/legal/LegalPage.svelte`, qui réutilise le sommaire et les blocs du blog) :
+
+- `/cgu` → `src/lib/legal/cgu.js` (conditions d'utilisation et d'adhésion)
+- `/confidentialite` → `src/lib/legal/confidentialite.js` (politique de confidentialité)
+- `/mentions-legales` → `src/lib/legal/mentionsLegales.js`
+
+Les informations de la société (dénomination, RCS, siège, TVA, directeur de la publication, prestataire de paiement, médiateur…) sont centralisées dans `src/lib/legal/editeur.js`. **Les valeurs entre crochets sont des placeholders à remplacer** dès que les informations seront connues ; elles s'affichent telles quelles sur le site en attendant. La date de mise à jour (`LEGAL_UPDATED`) est à avancer à chaque modification des textes.
+
+Au build, ces trois pages sont pré-rendues dans `dist/` avec leurs balises `<title>` / Open Graph (même mécanisme que le blog).
+
 ## Personnalisation
 
 - **Cal.com** : dans `src/App.svelte`, remplace l’`src` de l’iframe par ton lien Cal.com.
 - **Police** : la maquette prévoit Switzer ; le projet utilise **Inter** (Google Fonts) en attendant. Pour Switzer, ajoute les fichiers de police et un `@font-face` dans `src/app.css`, puis mets `font-family: 'Switzer', …`.
 - **Assets** : images/vidéo dans `public/assets/`. Les SVG `french-map.svg` et `graphique.svg` sont déjà utilisés. Tu peux ajouter les photos membres et du fondateur (remplacer les placeholders dans les sections Stats et Témoignages).
-- **Réseaux sociaux / mentions légales** : les liens du footer pointent vers des URLs génériques ; remplace-les par les vrais liens Boost.
+- **Réseaux sociaux** : les liens Instagram / LinkedIn / TikTok du footer pointent vers des URLs génériques ; remplace-les par les vrais liens Boost.
 
 ## Stack
 
