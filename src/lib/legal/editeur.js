@@ -2,7 +2,7 @@
 // confidentialité et les mentions légales.
 //
 // Module « pur » (aucun import Svelte / Vite) : il est aussi chargé côté Node
-// par scripts/blog-prerender.js.
+// par scripts/prerender.js.
 //
 // ⚠️  Les valeurs entre crochets sont des PLACEHOLDERS à remplacer dès que les
 // informations de la société éditrice de Boost seront connues. Elles sont

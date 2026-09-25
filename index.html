@@ -3,6 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Signale que JavaScript est actif (cf. règles [data-reveal] dans src/app.css) :
+      // les sections animées par GSAP restent masquées jusqu'à leur révélation. Sans
+      // JS (robots Google / IA, lecteurs), la classe est absente et tout est visible.
+      // Filet de sécurité : si le bundle ne s'exécute pas, tout redevient visible après 4 s.
+      document.documentElement.classList.add('js');
+      setTimeout(function () { document.documentElement.classList.add('js-timeout'); }, 4000);
+    </script>
     <link rel="icon" type="image/png" href="/favicon.png" />
     <title>Boost — Le club qui booste la nouvelle génération d'entrepreneurs</title>
     <meta name="description" content="Rejoins le Club Boost : un réseau national d'entrepreneurs, freelances et porteurs de projet pour avancer plus vite, ensemble. Réserve ta place dans ta ville." />
@@ -23,9 +31,8 @@
     <meta name="twitter:image" content="https://joinboost.fr/og-image.jpg" />
   </head>
   <body>
-    <div id="app">
-      <noscript>Pour utiliser ce site, veuillez activer JavaScript dans votre navigateur.</noscript>
-    </div>
+    <!-- Vide en dev ; rempli au build par le HTML pré-rendu de chaque page (scripts/prerender.js). -->
+    <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

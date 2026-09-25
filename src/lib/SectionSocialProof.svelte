@@ -1,5 +1,5 @@
 <script>
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import gsap from 'gsap';
   import robinImg from '../../assets/robin.png?url';
   import charlotteImg from '../../assets/charlotte.png?url';
@@ -213,6 +213,7 @@
       const target = parseInt(el.getAttribute('data-counter'), 10);
       const prefix = el.getAttribute('data-prefix') || '';
       const obj = { val: 0 };
+      el.textContent = prefix + '0'; // le HTML pré-rendu affiche la valeur finale
       gsap.to(obj, {
         val: target,
         duration: 2,
@@ -234,15 +235,17 @@
       window.addEventListener('mouseup', onUp);
       window.addEventListener('touchend', onUp);
     }
-  });
 
-  onDestroy(() => {
-    clearInterval(autoTimer);
-    if (wrapperEl) wrapperEl.removeEventListener('mousemove', onHoverMove);
-    window.removeEventListener('mousemove', onMove);
-    window.removeEventListener('touchmove', onMove);
-    window.removeEventListener('mouseup', onUp);
-    window.removeEventListener('touchend', onUp);
+    // Nettoyage dans le retour de onMount (et non onDestroy) : onDestroy
+    // s'exécute aussi lors du rendu côté serveur, où `window` n'existe pas.
+    return () => {
+      clearInterval(autoTimer);
+      if (wrapperEl) wrapperEl.removeEventListener('mousemove', onHoverMove);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('touchmove', onMove);
+      window.removeEventListener('mouseup', onUp);
+      window.removeEventListener('touchend', onUp);
+    };
   });
 </script>
 
@@ -291,7 +294,8 @@
             <path class="user-body u3" d="M13 32c0-4-2.5-7-6-8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
           </svg>
         </div>
-        <span class="kpi-hero-number" data-counter="45">0</span>
+        <!-- Valeur finale dans le HTML pré-rendu (robots) ; le compteur repart de 0 côté client (onMount). -->
+        <span class="kpi-hero-number" data-counter="45">45</span>
         <span class="kpi-hero-label">Membres actifs</span>
         <p class="kpi-hero-desc">Rejoins-nous pour construire le 1er réseau freelance de France.</p>
       </div>

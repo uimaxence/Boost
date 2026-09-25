@@ -31,6 +31,11 @@
 
   let openIndex = 0;
 
+  // Côté serveur (pré-rendu au build), toutes les réponses sont incluses dans le
+  // HTML pour que les robots (Google, IA) les lisent. Côté client, seule la
+  // réponse ouverte est dans le DOM : l'hydratation retire les autres.
+  const ssr = typeof window === 'undefined';
+
   function toggle(index) {
     openIndex = openIndex === index ? -1 : index;
   }
@@ -54,7 +59,7 @@
             <span class="faq-question">{faq.question}</span>
             <span class="accordion-icon">{openIndex === i ? '−' : '+'}</span>
           </button>
-          {#if openIndex === i && faq.answer}
+          {#if (openIndex === i || ssr) && faq.answer}
             <div
               class="accordion-panel"
               transition:slide={{ duration: 320, easing: cubicOut }}
@@ -160,5 +165,11 @@
     .faq-title {
       font-size: 1.5rem;
     }
+  }
+
+  /* Avant l'hydratation (JS actif), masque les réponses pré-rendues des questions
+     fermées pour éviter un saut de mise en page ; sans JS, elles restent lisibles. */
+  :global(html.js) .faq-item:not(.open) .accordion-panel {
+    display: none;
   }
 </style>

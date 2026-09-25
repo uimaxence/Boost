@@ -4,8 +4,9 @@
   import rondSvg from '../../assets/rond.svg?url';
   import { onMount } from 'svelte';
 
-  let count = 0;
   const target = 20;
+  // Valeur finale dans le HTML pré-rendu (robots) ; le compteur s'anime côté client.
+  let count = typeof window === 'undefined' ? target : 0;
 
   onMount(() => {
     const step = () => {

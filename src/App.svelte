@@ -25,21 +25,23 @@
 
   // Routage minimal basé sur le pathname (pas de navigation côté client :
   // chaque page est un chargement complet, cf. la réécriture SPA dans vercel.json).
-  const rawPath = typeof window !== 'undefined' ? window.location.pathname : '/';
-  const path = rawPath.length > 1 ? rawPath.replace(/\/+$/, '') : rawPath;
+  // `path` est passé par scripts/prerender.js lors du rendu côté serveur au build ;
+  // dans le navigateur, il vient de l'URL courante.
+  export let path = typeof window !== 'undefined' ? window.location.pathname : '/';
+  const cleanPath = path.length > 1 ? path.replace(/\/+$/, '') : path;
 
   let route = 'home';
   let article = null;
-  const legalPage = getLegalPage(path); // /cgu, /confidentialite, /mentions-legales
+  const legalPage = getLegalPage(cleanPath); // /cgu, /confidentialite, /mentions-legales
 
   if (legalPage) {
     route = 'legal';
-  } else if (path === '/credits') {
+  } else if (cleanPath === '/credits') {
     route = 'credits';
-  } else if (path === '/blog') {
+  } else if (cleanPath === '/blog') {
     route = 'blog';
-  } else if (path.startsWith('/blog/')) {
-    article = getArticle(decodeURIComponent(path.slice('/blog/'.length)));
+  } else if (cleanPath.startsWith('/blog/')) {
+    article = getArticle(decodeURIComponent(cleanPath.slice('/blog/'.length)));
     route = article ? 'article' : 'blog';
   }
 

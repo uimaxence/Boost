@@ -94,7 +94,19 @@ img {
   display: block;
 }
 
-/* Les sections [data-reveal] sont visibles par défaut.
-   GSAP applique opacity:0 en inline-style dès l'initialisation (immediateRender),
-   le "flash" entre rendu Svelte et init GSAP est imperceptible (~1 frame),
-   et si GSAP plante (webview restrictive) la page reste lisible. */
+/* Sections [data-reveal] (animation d'apparition GSAP, cf. App.svelte).
+   - Sans JavaScript (robots Google / IA, lecteurs) : <html> n'a pas la classe `js`
+     (posée par le script inline d'index.html), tout le HTML pré-rendu est visible.
+   - Avec JavaScript : les sections sont masquées dès le premier rendu, puis GSAP
+     pose opacity:0 en inline-style et les révèle au scroll. Sans cette règle, le
+     HTML pré-rendu apparaîtrait, disparaîtrait à l'init GSAP puis réapparaîtrait.
+   - Filet de sécurité : si le bundle JS ne s'exécute pas (webview restrictive,
+     réseau), `js-timeout` est posé après 4 s et tout redevient visible ; les
+     éléments déjà pris en main par GSAP gardent leur style inline. */
+html.js [data-reveal] {
+  opacity: 0;
+}
+
+html.js.js-timeout [data-reveal] {
+  opacity: 1;
+}
