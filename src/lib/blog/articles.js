@@ -52,6 +52,175 @@ export const authors = {
 /** Les articles, du plus récent au plus ancien. */
 export const articles = [
   {
+    slug: 'tour-de-france-boost',
+    title: 'Le Tour de France Boost : on part à la rencontre des entrepreneurs de France',
+    excerpt:
+      "Annoncé le 2 septembre à Angers, le Tour de France Boost démarre début 2027. Dix villes, dix soirées, et à chaque étape un nouveau Club Boost lancé avec les entrepreneurs de la ville. On cherche aussi un partenaire officiel pour l'aventure.",
+    category: 'Annonce',
+    date: '2026-09-25',
+    location: 'Angers',
+    author: 'matteo',
+    cover: '/blog/tour-de-france-boost/cover.webp',
+    coverAlt: 'Écran affichant la carte du Tour de France Boost avec les 10 villes reliées entre elles',
+    ogImage: '/blog/tour-de-france-boost/og.jpg',
+    sections: [
+      {
+        id: 'tout-a-commence',
+        title: 'Tout a commencé le 2 septembre',
+        blocks: [
+          {
+            type: 'p',
+            html: "Le 2 septembre dernier, on organisait <a href=\"/blog/soiree-de-rentree-club-boost-angers\">la soirée de rentrée du Club Boost d'Angers</a>, la première soirée portes ouvertes de l'histoire de Boost. 50 entrepreneurs réunis au Pod Coworking pour une soirée de networking, d'échanges et d'annonces.",
+          },
+          {
+            type: 'p',
+            html: "C'est lors de cette soirée qu'on a officiellement annoncé le projet qui nous tient le plus à cœur pour les prochains mois : <strong>le Tour de France Boost</strong>.",
+          },
+          {
+            type: 'image',
+            src: '/blog/soiree-de-rentree-club-boost-angers/cover.webp',
+            alt: "Les participants écoutent les présentations lors de la soirée de rentrée du Club Boost, au Pod Coworking à Angers",
+            caption: "La soirée de rentrée du Club Boost d'Angers, le 2 septembre 2026, au Pod Coworking.",
+          },
+        ],
+      },
+      {
+        id: 'demarche',
+        title: 'La démarche',
+        blocks: [
+          {
+            type: 'p',
+            html: "Le premier Club Boost a vu le jour à Angers en février 2026. Depuis, une vraie dynamique s'est créée. Des membres qui échangent au quotidien, des rencontres régulières, des tables rondes, des collaborations qui naissent. En quelques mois, on a prouvé que <a href=\"/#concept\">le concept</a> fonctionne, que des entrepreneurs qui se réunissent autour d'un projet commun, ça crée quelque chose de réel et de durable.",
+          },
+          {
+            type: 'p',
+            html: "Mais l'ambition de Boost a toujours été nationale. Créer ce même réseau local dans chaque grande ville de France, pour que chaque entrepreneur, où qu'il soit, puisse trouver une communauté près de chez lui.",
+          },
+          {
+            type: 'p',
+            html: "Pour développer ce réseau national, on aurait pu attendre. Attendre que les gens viennent à nous, que les demandes arrivent, que les choses se fassent naturellement. Mais ce n'est pas dans notre ADN, et ce n'est pas dans celui des entrepreneurs non plus.",
+          },
+          {
+            type: 'p',
+            html: "Alors on passe à l'action. C'est nous qui faisons la démarche d'aller à la rencontre des entrepreneurs de France, directement sur leur terrain, dans leurs villes.",
+          },
+          {
+            type: 'p',
+            html: "Plutôt que d'attendre, on a décidé d'aller directement à la rencontre des entrepreneurs de France. De se déplacer, de se présenter, d'expliquer le projet en face à face. Parce que chez Boost, on croit profondément que les meilleures choses se construisent dans la proximité et dans le contact humain.",
+          },
+          { type: 'highlight', html: "C'est comme ça qu'est né le Tour de France Boost." },
+        ],
+      },
+      {
+        id: 'villes',
+        title: 'Les 10 villes au programme',
+        blocks: [
+          {
+            type: 'p',
+            html: "On a choisi 10 villes pour ce premier tour. Des métropoles françaises dynamiques, avec des écosystèmes entrepreneuriaux forts et des communautés de freelances et d'entrepreneurs en pleine croissance. Des villes qui bougent, qui attirent, et qui méritent d'avoir leur propre Club Boost.",
+          },
+          {
+            type: 'tags',
+            items: ['Rennes', 'Nantes', 'Bordeaux', 'Toulouse', 'Montpellier', 'Marseille', 'Lyon', 'Strasbourg', 'Lille', 'Paris'],
+          },
+        ],
+      },
+      {
+        id: 'sur-place',
+        title: "Ce qu'on va faire sur place",
+        blocks: [
+          {
+            type: 'p',
+            html: "Dans chaque ville, on organisera une soirée dédiée aux entrepreneurs locaux, ouverte à tous les freelances, chefs d'entreprise et porteurs de projet qui veulent découvrir Boost et rencontrer leur future communauté.",
+          },
+          { type: 'p', html: 'Au programme de chaque étape :' },
+          {
+            type: 'steps',
+            items: [
+              {
+                title: 'Une présentation complète du projet Boost',
+                text: "Son histoire, sa vision et ses ambitions : pourquoi ce projet existe, et ce qu'on veut construire dans chaque ville.",
+              },
+              {
+                title: "Un temps d'échange",
+                text: "Autour des enjeux qui touchent vraiment les entrepreneurs : la solitude, le réseau, les opportunités, la croissance.",
+              },
+              {
+                title: 'Un moment de networking',
+                text: "Pour laisser les vraies connexions se faire, celles qui donnent naissance à des collaborations, des partenariats, ou simplement à des gens sur qui on peut compter.",
+              },
+            ],
+          },
+          {
+            type: 'image',
+            src: '/blog/tour-de-france-boost/networking.webp',
+            alt: 'Des entrepreneurs discutent en petits groupes pendant un temps de networking',
+            caption: "Le networking, au cœur de chaque étape. Ici, lors de la soirée de rentrée à Angers.",
+          },
+          {
+            type: 'p',
+            html: "L'objectif est simple : <strong>qu'à la fin de chaque soirée, le Club Boost de la ville soit officiellement lancé.</strong>",
+          },
+          {
+            type: 'p',
+            html: "Concrètement, les participants pourront s'inscrire et rejoindre la communauté directement pendant la soirée. Le groupe est créé, les premiers membres se connaissent déjà, la dynamique est lancée. On repart, mais le Club, lui, reste et continue de vivre.",
+          },
+          { type: 'highlight', html: "Boost, c'est une communauté qui dure." },
+        ],
+      },
+      {
+        id: 'partenaire',
+        title: 'On cherche un partenaire officiel',
+        blocks: [
+          {
+            type: 'p',
+            html: "Pour ce Tour de France, Boost est à la recherche d'un <strong>partenaire officiel</strong>.",
+          },
+          {
+            type: 'p',
+            html: "Pas un sponsor au sens traditionnel du terme. Un partenaire qui partage nos valeurs, qui croit au même écosystème que nous, et dont les services apportent une vraie valeur aux entrepreneurs qu'on va rencontrer.",
+          },
+          {
+            type: 'p',
+            html: "Une marque qui fait sens avec ce que Boost veut développer : être au plus proche des entrepreneurs, leur apporter les bons outils, les bonnes ressources, et les bonnes personnes.",
+          },
+          {
+            type: 'p',
+            html: "Si vous êtes une marque, une entreprise ou un service qui s'adresse aux freelances et entrepreneurs, et que vous voyez dans ce Tour de France une opportunité de vous connecter à votre cible de façon authentique et engagée, <a href=\"mailto:contact@joinboost.fr?subject=Partenariat%20Tour%20de%20France%20Boost\">parlons-en</a>.",
+          },
+          {
+            type: 'cta',
+            title: 'Vous voulez devenir partenaire officiel du Tour de France Boost ?',
+            text: "Écrivez-nous, on vous présente le projet et ce qu'on peut construire ensemble.",
+            label: 'Nous écrire',
+            href: 'mailto:contact@joinboost.fr?subject=Partenariat%20Tour%20de%20France%20Boost',
+          },
+        ],
+      },
+      {
+        id: 'la-suite',
+        title: 'La suite',
+        blocks: [
+          {
+            type: 'p',
+            html: "Le Tour de France Boost démarre <strong>début 2027</strong>. Les dates et les lieux précis de chaque étape seront communiqués prochainement.",
+          },
+          {
+            type: 'p',
+            html: "Pour ne rien rater de l'aventure et être parmi les premiers informés de notre passage dans ta ville, suis Boost sur les réseaux sociaux. C'est là que toutes les annonces seront faites en avant-première.",
+          },
+          {
+            type: 'cta',
+            title: 'Tu veux rejoindre le Club Boost près de chez toi ?',
+            text: "Réserve un appel de 15 minutes avec l'équipe pour découvrir le Club et candidater.",
+            label: 'Candidater au Club',
+            href: '/#candidater',
+          },
+        ],
+      },
+    ],
+  },
+  {
     slug: 'soiree-de-rentree-club-boost-angers',
     title: 'La soirée de rentrée du Club Boost : retour sur une première mémorable',
     excerpt:
@@ -212,7 +381,7 @@ export const articles = [
           },
           {
             type: 'p',
-            html: "Un tour de France ambitieux, qui va permettre à Boost de s'ancrer dans les grandes villes françaises et de construire un réseau d'entrepreneurs à l'échelle nationale. Si tu es dans l'une de ces villes et que tu veux être parmi les premiers à rejoindre le Club Boost de ta ville, <a href=\"/#candidater\">les inscriptions ouvrent bientôt</a>.",
+            html: "Un tour de France ambitieux, qui va permettre à Boost de s'ancrer dans les grandes villes françaises et de construire un réseau d'entrepreneurs à l'échelle nationale. Si tu es dans l'une de ces villes et que tu veux être parmi les premiers à rejoindre le Club Boost de ta ville, <a href=\"/#candidater\">les inscriptions ouvrent bientôt</a>. On te raconte tout dans <a href=\"/blog/tour-de-france-boost\">l'article dédié au Tour de France Boost</a>.",
           },
         ],
       },
