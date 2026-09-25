@@ -3,3 +3,6 @@ node_modules
 .vscode
 .idea
 *.log
+
+# Photos sources du blog envoyées par le client (PNG lourds) ; les WebP servis sont dans public/blog/<slug>/
+assets/Blog/
