@@ -1,6 +1,6 @@
 // Données du blog.
 // Module « pur » (aucun import Svelte / Vite) : il est aussi chargé côté Node
-// par scripts/blog-prerender.js (métadonnées de partage) et scripts/og-image.py.
+// par scripts/prerender.js (métadonnées de partage) et scripts/og-image.py.
 
 export const SITE_URL = 'https://joinboost.fr';
 export const SITE_NAME = 'Boost';
@@ -207,7 +207,7 @@ export const articles = [
           },
           {
             type: 'p',
-            html: "Pour ne rien rater de l'aventure et être parmi les premiers informés de notre passage dans ta ville, suis Boost sur les réseaux sociaux. C'est là que toutes les annonces seront faites en avant-première.",
+            html: "Pour ne rien rater de l'aventure et être parmi les premiers informés de notre passage dans ta ville, suis Boost sur <a href=\"https://www.instagram.com/ecosystemeboost/\" target=\"_blank\" rel=\"noopener\">Instagram</a>, <a href=\"https://www.linkedin.com/company/%C3%A9cosyst%C3%A8me-boost/\" target=\"_blank\" rel=\"noopener\">LinkedIn</a> et <a href=\"https://www.tiktok.com/@ecosystemeboost\" target=\"_blank\" rel=\"noopener\">TikTok</a>. C'est là que toutes les annonces seront faites en avant-première.",
           },
           {
             type: 'cta',

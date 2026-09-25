@@ -1,0 +1,20 @@
+# joinboost.fr — tout le site est livré en HTML complet (pré-rendu au build,
+# voir scripts/prerender.js) : aucun robot n'a besoin d'exécuter JavaScript.
+
+User-agent: *
+Allow: /
+
+# Crawlers IA (déjà couverts par « * », listés pour rendre l'intention explicite)
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: anthropic-ai
+User-agent: PerplexityBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://joinboost.fr/sitemap.xml
