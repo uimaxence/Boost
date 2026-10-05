@@ -2,21 +2,6 @@
   import ButtonCta from './ButtonCta.svelte';
   import FranceMap from './FranceMap.svelte';
   import rondSvg from '../../assets/rond.svg?url';
-  import { onMount } from 'svelte';
-
-  const target = 20;
-  // Valeur finale dans le HTML pré-rendu (robots) ; le compteur s'anime côté client.
-  let count = typeof window === 'undefined' ? target : 0;
-
-  onMount(() => {
-    const step = () => {
-      if (count < target) {
-        count++;
-        setTimeout(step, 60);
-      }
-    };
-    setTimeout(step, 800);
-  });
 </script>
 
 <section class="hero" data-reveal>
@@ -45,17 +30,6 @@
       </p>
       <div class="hero-cta">
         <ButtonCta href="#candidater" label="Candidater au Club" />
-        <div class="hero-social-proof">
-          <div class="avatar-stack">
-            <span class="avatar" style="background: #3b82f6;">M</span>
-            <span class="avatar" style="background: #6366f1;">L</span>
-            <span class="avatar" style="background: #8b5cf6;">R</span>
-            <span class="avatar" style="background: #2064F0;">P</span>
-          </div>
-          <p class="hero-cta-note">
-            <span class="note-count">+{count}</span> nouveaux inscrits cette semaine
-          </p>
-        </div>
       </div>
     </div>
   </div>
@@ -187,57 +161,6 @@
     gap: 1rem;
   }
 
-  /* Social proof avec avatars */
-  .hero-social-proof {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .avatar-stack {
-    display: flex;
-  }
-
-  .avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: white;
-    border: 2px solid white;
-    margin-right: -10px;
-    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  }
-
-  .avatar:nth-child(1) { animation-delay: 0.9s; }
-  .avatar:nth-child(2) { animation-delay: 1.05s; }
-  .avatar:nth-child(3) { animation-delay: 1.2s; }
-  .avatar:nth-child(4) { animation-delay: 1.35s; }
-
-  .avatar:last-child {
-    margin-right: 0;
-  }
-
-  @keyframes popIn {
-    0% { opacity: 0; transform: scale(0); }
-    100% { opacity: 1; transform: scale(1); }
-  }
-
-  .hero-cta-note {
-    font-size: 0.875rem;
-    color: var(--gris-400);
-    margin: 0;
-  }
-
-  .note-count {
-    font-weight: 600;
-    color: var(--bleu-600);
-  }
-
   /* ---- Responsive ---- */
 
   @media (max-width: 1100px) {
@@ -306,14 +229,6 @@
 
     .hero-desc {
       font-size: 16px;
-    }
-
-    .hero-social-proof {
-      flex-wrap: wrap;
-    }
-
-    .hero-cta-note {
-      font-size: 0.8125rem;
     }
   }
 
